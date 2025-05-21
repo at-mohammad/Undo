@@ -11,11 +11,19 @@ import SwiftUI
 
 // MARK: - Header Section View
 struct HeaderSectionView: View {
+    // MARK: Properties
     let habits: [Habit]
+    let today = Date.now
     
+    // MARK: Computed Properties
+    private var completedTodayCount: Int {
+        habits.filter { $0.isCompleted(for: today) }.count
+    }
+    
+    // MARK: Body
     var body: some View {
         VStack(alignment: .center) {
-            ProgressCardView(completedCount: 1, totalCount: 3)
+            ProgressCardView(completedCount: completedTodayCount, totalCount: habits.count)
                 .padding()
                 .frame(maxWidth: 370)
                 .background(.black)

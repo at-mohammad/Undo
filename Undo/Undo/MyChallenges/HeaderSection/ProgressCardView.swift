@@ -11,8 +11,15 @@ import SwiftUI
 
 // MARK: - Progress Card View
 struct ProgressCardView: View {
+    // MARK: Properties
     let completedCount: Int
     let totalCount: Int
+    
+    // MARK: Computed Properties
+    private var progress: Double {
+        guard totalCount > 0 else { return 0 } // avoid division by zero
+        return Double(completedCount) / Double(totalCount)
+    }
     
     private var encouragementText: String {
         switch progress {
@@ -22,10 +29,7 @@ struct ProgressCardView: View {
         }
     }
     
-    private var progress: Double {
-        Double(completedCount) / Double(totalCount)
-    }
-
+    // MARK: Body
     var body: some View {
         HStack(spacing: 150) {
             VStack(alignment: .leading, spacing: 5) {
@@ -51,4 +55,5 @@ struct ProgressCardView: View {
 // MARK: - Preview
 #Preview {
     ProgressCardView(completedCount: 1, totalCount: 4)
+        .preferredColorScheme(.dark)
 }

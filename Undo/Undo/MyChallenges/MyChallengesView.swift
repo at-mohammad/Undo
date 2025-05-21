@@ -12,13 +12,19 @@ import SwiftUI
 
 // MARK: - My Challenges View
 struct MyChallengesView: View {
+    // MARK: Properties
     @Environment(\.modelContext) var modelContext
     @Query var habits: [Habit]
     
+    // MARK: Body
     var body: some View {
         VStack {
-            HeaderSectionView(habits: habits)
-            HabitsSectionView()
+            if habits.isEmpty {
+                emptyStateView
+            } else {
+                HeaderSectionView(habits: habits)
+                HabitsSectionView(habits: habits)
+            }
         }
         .navigationTitle("My Challenges")
         .toolbar {
@@ -33,6 +39,12 @@ struct MyChallengesView: View {
         }
     }
     
+    // MARK: Subviews
+    private var emptyStateView: some View {
+        ContentUnavailableView("No Habits", systemImage: "plus", description: Text("Tap the \(Image(systemName: "plus")) sign to add your first habit!"))
+    }
+    
+    // MARK: Functions
     func addSampleHabits() {
         let habit1 = Habit(name: "Drink water", iconName: "drop", creationDate: .now)
         let habit2 = Habit(name: "Drink water", iconName: "drop", creationDate: .now)
@@ -40,20 +52,12 @@ struct MyChallengesView: View {
         
         let habits = [habit1, habit2, habit3]
         
-        habits.forEach {
-            modelContext.insert($0)
+        habits.forEach { habit in
+            _ = habit.log(for: .now, context: modelContext)
+            modelContext.insert(habit)
         }
-    }
-}
-
-
-
-
-
-// MARK: - Habits Section View
-struct HabitsSectionView: View {
-    var body: some View {
-        Text("")
+        
+        habit1.log(for: .now, context: modelContext).isCompleted = true
     }
 }
 
