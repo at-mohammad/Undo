@@ -1,6 +1,8 @@
 ## 🎯 Tips & Tricks
 *(For best practices and optimization techniques)*
 
+---
+
 ### 1. `compactMap`
 - **What it does**:
   Like `map`, but filters out `nil` results and unwraps optionals.
