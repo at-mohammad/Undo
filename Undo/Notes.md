@@ -12,3 +12,5 @@
   ```swift
   ["1", "2", "x"].compactMap { Int($0) } // [1, 2] (no nil!)
   what about this line
+  ```
+  now what about this:
