@@ -16,20 +16,20 @@
 	}
 
 - **Breakdown**:
-	1. `Calendar.current.component(.weekday, from: date)`
+	- `Calendar.current.component(.weekday, from: date)`:
 		Returns the weekday number (1-7) from a date, where:
 			```swift
 				1 = Sunday  
 				2 = Monday  
 				...  
 				7 = Saturday
-	2. Index Adjustment (`- 1`)
+	- Index Adjustment (`- 1`):
 		Converts the weekday number (`1-7`) to a zero-based index (`0-6`) for array access.
 		Why? `shortWeekdaySymbols` is an array (indices `0-6`).
-	3. `DateFormatter().shortWeekdaySymbols[...]`
+	- `DateFormatter().shortWeekdaySymbols[...]`:
 		Fetches the abbreviated weekday name (e.g., "Mon" for Monday).
 		Localization: Automatically adapts to the device's language (e.g., "Lun" for Spanish).
-	4. .prefix(1).uppercased()
+	- .prefix(1).uppercased():
 		Takes the first letter of the symbol and capitalizes it (e.g., "Mon" → "M").
 
 - **Key Insights**:
