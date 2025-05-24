@@ -9,8 +9,10 @@
 	["1", "2", "x"].compactMap { Int($0) } // [1, 2] (no nil!)
 
 
+---
 
-### 1. `dayLetter` Computed Property
+
+### 2. `dayLetter` Computed Property
 - **What it does**:
 	Converts a date into its capitalized weekday initial (e.g., "M" for Monday).
 
@@ -25,17 +27,18 @@
 - **Breakdown**:
 	- `Calendar.current.component(.weekday, from: date)`
 		Returns the weekday number (1-7) from a date, where:
-			1 = Sunday  
-			2 = Monday  
-			...  
-			7 = Saturday  
-	- Index Adjustment (- 1)
-		Converts the weekday number (1-7) to a zero-based index (0-6) for array access.
-		Why? shortWeekdaySymbols is an array (indices 0-6).
-	-`DateFormatter().shortWeekdaySymbols[...]`
+			```swift
+				1 = Sunday  
+				2 = Monday  
+				...  
+				7 = Saturday
+	- Index Adjustment (`- 1`)
+		Converts the weekday number (`1-7`) to a zero-based index (`0-6`) for array access.
+		Why? `shortWeekdaySymbols` is an array (indices `0-6`).
+	- `DateFormatter().shortWeekdaySymbols[...]`
 		Fetches the abbreviated weekday name (e.g., "Mon" for Monday).
 		Localization: Automatically adapts to the device's language (e.g., "Lun" for Spanish).
-	-.prefix(1).uppercased()
+	- .prefix(1).uppercased()
 		Takes the first letter of the symbol and capitalizes it (e.g., "Mon" → "M").
 
 - **Key Insights**:
