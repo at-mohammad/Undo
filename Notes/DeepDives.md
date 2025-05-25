@@ -21,11 +21,11 @@
 
 - **Breakdown**:
 	| Component | Description | Example | Notes |
-| ----------- | ----------- | ----------- | ----------- |
-| `Calendar.current.component(.weekday, from: Date())` | Returns the weekday number (`1-7`) from a `Date` object | `1 = Sunday`<br>`2 = Monday` | - |
-| **Index Adjustment** (`- 1`) | Converts the weekday number (`1-7`) to a zero-based index (`0-6`) | `1 (Sunday) → 0` | Needed because `shortWeekdaySymbols` uses 0-based indices (`0-6`) |
-| `DateFormatter().shortWeekdaySymbols[...]` | Gets localized abbreviated weekday name | `"Mon"` (English)<br>`"Lun"` (Spanish) | Automatically adapts to system language |
-| `.prefix(1).uppercased()` | Extracts and capitalizes first letter | `"Mon" → "M"` | Consistent single-letter output |
+	| ----------- | ----------- | ----------- | ----------- |
+	| `Calendar.current.component(.weekday, from: Date())` | Returns the weekday number (`1-7`) from a `Date` object | `1 = Sunday`<br>`2 = Monday` | - |
+	| **Index Adjustment** (`- 1`) | Converts the weekday number (`1-7`) to a zero-based index (`0-6`) | `1 (Sunday) → 0` | Needed because `shortWeekdaySymbols` uses 0-based indices (`0-6`) |
+	| `DateFormatter().shortWeekdaySymbols[...]` | Gets localized abbreviated weekday name | `"Mon"` (English)<br>`"Lun"` (Spanish) | Automatically adapts to system language |
+	| `.prefix(1).uppercased()` | Extracts and capitalizes first letter | `"Mon" → "M"` | Consistent single-letter output |
 
 - **Key Insights**:
 	- Safety:
