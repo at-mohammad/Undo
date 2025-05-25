@@ -3,7 +3,11 @@
 
 ---
 
-### 1. `dayLetter` Computed Property
+### 1. 
+
+---
+
+### 2. `dayLetter` Computed Property
 - **What it does**:
 	Converts a `Date` into its capitalized weekday initial (e.g., "M" for Monday).
 
@@ -16,21 +20,12 @@
 	}
 
 - **Breakdown**:
-	- `Calendar.current.component(.weekday, from: Date())`:
-		- Returns the weekday number (`1-7`) from a `Date` object, where:
-			```swift
-				1 = Sunday  
-				2 = Monday  
-				...  
-				7 = Saturday
-	- Index Adjustment (`- 1`):
-		- Converts the weekday number (`1-7`) to a zero-based index (`0-6`) for array access.
-		- Why? `shortWeekdaySymbols` is an array (indices `0-6`).
-	- `DateFormatter().shortWeekdaySymbols[...]`:
-		- Fetches the abbreviated weekday name (e.g., "Mon" for Monday).
-		- Localization: Automatically adapts to the device's language (e.g., "Lun" for Spanish).
-	- `.prefix(1).uppercased()`:
-		- Takes the first letter of the symbol and capitalizes it (e.g., "Mon" → "M").
+	| Component | Description | Example | Notes |
+| ----------- | ----------- | ----------- | ----------- |
+| `Calendar.current.component(.weekday, from: Date())` | Returns the weekday number (`1-7`) from a `Date` object | `1 = Sunday`<br>`2 = Monday` | - |
+| **Index Adjustment** (`- 1`) | Converts the weekday number (`1-7`) to a zero-based index (`0-6`) | `1 (Sunday) → 0` | Needed because `shortWeekdaySymbols` uses 0-based indices (`0-6`) |
+| `DateFormatter().shortWeekdaySymbols[...]` | Gets localized abbreviated weekday name | `"Mon"` (English)<br>`"Lun"` (Spanish) | Automatically adapts to system language |
+| `.prefix(1).uppercased()` | Extracts and capitalizes first letter | `"Mon" → "M"` | Consistent single-letter output |
 
 - **Key Insights**:
 	- Safety:
@@ -43,3 +38,4 @@
 
 ---
 
+### 3. 
