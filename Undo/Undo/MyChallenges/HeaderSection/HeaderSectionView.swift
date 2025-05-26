@@ -13,7 +13,7 @@ import SwiftUI
 struct HeaderSectionView: View {
     // MARK: Properties
     let habits: [Habit]
-    let today = Date.now
+    private let today = Date.now
     
     // MARK: Computed Properties
     private var completedTodayCount: Int {
@@ -38,11 +38,5 @@ struct HeaderSectionView: View {
 
 // MARK: - Preview
 #Preview {
-    let habit1 = Habit(name: "Drink water", iconName: "drop", creationDate: .now)
-    let habit2 = Habit(name: "Drink water", iconName: "drop", creationDate: .now)
-    let habit3 = Habit(name: "Drink water", iconName: "drop", creationDate: .now)
-    
-    let habits = [habit1, habit2, habit3]
-    
-    return HeaderSectionView(habits: habits)
+    HeaderSectionView(habits: Habit.sampleData)
 }

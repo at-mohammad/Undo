@@ -14,17 +14,13 @@ import SwiftUI
 struct MyChallengesView: View {
     // MARK: Properties
     @Environment(\.modelContext) var modelContext
-    @Query var habits: [Habit]
+    @Query(sort: [SortDescriptor(\Habit.creationDate, order: .reverse)]) var habits: [Habit]
     
     // MARK: Body
     var body: some View {
         VStack {
-            if habits.isEmpty {
-                emptyStateView
-            } else {
-                HeaderSectionView(habits: habits)
-                HabitsSectionView(habits: habits)
-            }
+            HeaderSectionView(habits: habits)
+            HabitsSectionView(habits: habits)
         }
         .navigationTitle("My Challenges")
         .toolbar {
@@ -39,25 +35,16 @@ struct MyChallengesView: View {
         }
     }
     
-    // MARK: Subviews
-    private var emptyStateView: some View {
-        ContentUnavailableView("No Habits", systemImage: "plus", description: Text("Tap the \(Image(systemName: "plus")) sign to add your first habit!"))
-    }
-    
     // MARK: Functions
     func addSampleHabits() {
-        let habit1 = Habit(name: "Drink water", iconName: "drop", creationDate: .now)
-        let habit2 = Habit(name: "Drink water", iconName: "drop", creationDate: .now)
-        let habit3 = Habit(name: "Drink water", iconName: "drop", creationDate: .now)
-        
-        let habits = [habit1, habit2, habit3]
+        let habits = Habit.sampleData
         
         habits.forEach { habit in
-            _ = habit.log(for: .now, context: modelContext)
+            _ = habit.log(for: .now, modelContext: modelContext)
             modelContext.insert(habit)
         }
         
-        habit1.log(for: .now, context: modelContext).isCompleted = true
+        habits[0].log(for: .now, modelContext: modelContext).isCompleted = true
     }
 }
 
@@ -70,6 +57,10 @@ struct MyChallengesView: View {
     do {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: Habit.self, configurations: config)
+        
+        Habit.sampleData.forEach { habit in
+            container.mainContext.insert(habit)
+        }
         
         return MyChallengesView()
             .modelContainer(container)

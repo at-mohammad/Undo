@@ -14,6 +14,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             MyChallengesView()
+                .preferredColorScheme(.light)
         }
     }
 }
