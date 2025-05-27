@@ -5,6 +5,7 @@
 //  Created by AbdelRahman Mohammad on 21/05/2025.
 //
 
+import SwiftData
 import SwiftUI
 
 
@@ -12,7 +13,9 @@ import SwiftUI
 // MARK: - Habits Section View
 struct HabitsSectionView: View {
     // MARK: Properties
+    @Environment(\.modelContext) private var modelContext
     let habits: [Habit]
+    @Binding var path: [Habit]
     
     // Reference: TT#1
     // MARK: Expensive Instances
@@ -47,10 +50,15 @@ struct HabitsSectionView: View {
                     HabitRowView(habit: habit, weekDaysDictionary: weekDaysDictionary, today: today, calendar: calendar)
                         .listRowSeparator(.hidden)
                         .padding(12)
+                        .contextMenu {
+                            Button("Edit Habit", action: {editHabit(habit)})
+                            Button("Delete Habit", action: {deleteHabit(habit)})
+                            Button("Reset Progress", action: {resetProgress(habit)})
+                        }
                 }
             }
             .listStyle(.plain)
-            //.scrollBounceBehavior(.basedOnSize)
+            .scrollBounceBehavior(.basedOnSize)
             .scrollContentBackground(.hidden)
             .scrollDismissesKeyboard(.interactively)
         }
@@ -60,6 +68,23 @@ struct HabitsSectionView: View {
     private var emptyStateView: some View {
         ContentUnavailableView("No Habits", systemImage: "plus", description: Text("Tap the \(Image(systemName: "plus")) sign to add your first habit!"))
     }
+    
+    // MARK: Functions
+    private func editHabit(_ habit: Habit) {
+        path = [habit]
+    }
+    
+    private func deleteHabit(_ habit: Habit) {
+        modelContext.delete(habit)
+    }
+    
+    private func resetProgress(_ habit: Habit) {
+        guard let logs = habit.logs else { return }
+        logs.forEach {
+            modelContext.delete($0)
+        }
+        //habit.logs?.removeAll() not needed!
+    }
 }
 
 
@@ -68,5 +93,5 @@ struct HabitsSectionView: View {
 
 // MARK: - Preview
 #Preview {
-    HabitsSectionView(habits: Habit.sampleData)
+    HabitsSectionView(habits: Habit.sampleData, path: .constant(Habit.sampleData))
 }

@@ -10,6 +10,8 @@ import SwiftData
 
 @Model
 class Habit {
+    // MARK: - Static Properties
+    /// Sample data for previews and testing
     static let sampleData = [
         Habit(name: "Drink water", iconName: "drop", creationDate: .now.addingTimeInterval(86400 * -10)),
         Habit(name: "Buy gift", iconName: "gift", creationDate: .now.addingTimeInterval(86400 * -5)),
@@ -20,6 +22,7 @@ class Habit {
     var name: String
     var iconName: String
     var creationDate: Date
+    var isInserted: Bool
     
     // Marked as optional to handle cases where: logs haven't been created yet, failed to load, or was intentionally cleared.
     @Relationship(deleteRule: .cascade) var logs: [HabitLog]?
@@ -27,10 +30,11 @@ class Habit {
     
     
     // MARK: - Initialization
-    init(name: String, iconName: String, creationDate: Date = .now) {
+    init(name: String = "", iconName: String = "star", creationDate: Date = .now, isinserted: Bool = false) {
         self.name = name
         self.iconName = iconName
         self.creationDate = creationDate
+        self.isInserted = isinserted
     }
     
     

@@ -13,24 +13,45 @@ import SwiftUI
 // MARK: - My Challenges View
 struct MyChallengesView: View {
     // MARK: Properties
-    @Environment(\.modelContext) var modelContext
+    @Environment(\.modelContext) private var modelContext
     @Query(sort: [SortDescriptor(\Habit.creationDate, order: .reverse)]) var habits: [Habit]
+    @Query private var logs: [HabitLog]
+    @State private var path = [Habit]()
     
     // MARK: Body
     var body: some View {
-        VStack {
-            HeaderSectionView(habits: habits)
-            HabitsSectionView(habits: habits)
-        }
-        .navigationTitle("My Challenges")
-        .toolbar {
-            Button("Add Sample Habits", systemImage: "plus") {
-                addSampleHabits()
+        NavigationStack(path: $path) {
+            VStack {
+                HeaderSectionView(habits: habits)
+                HabitsSectionView(habits: habits, path: $path)
+                Text("Logs: \(logs.count)")
             }
-            Button("Delete All Habits", systemImage: "trash") {
-                habits.forEach {
-                    modelContext.delete($0)
+            .navigationTitle("My Challenges")
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarLeading) {
+                    Button("Delete All Habits", systemImage: "trash") {
+                        habits.forEach {
+                            modelContext.delete($0)
+                        }
+                        logs.forEach {
+                            modelContext.delete($0)
+                        }
+                    }
+                    Button("Add Sample Habits", systemImage: "plus.app.fill") {
+                        addSampleHabits()
+                    }
                 }
+                
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button("Add Habit", systemImage: "plus") {
+                        let habit = Habit()
+                        path = [habit]
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .navigationDestination(for: Habit.self) { habit in
+                EditHabitView(habit: habit, habitName: habit.name, selectedIcon: habit.iconName)
             }
         }
     }
@@ -42,6 +63,7 @@ struct MyChallengesView: View {
         habits.forEach { habit in
             _ = habit.log(for: .now, modelContext: modelContext)
             modelContext.insert(habit)
+            habit.isInserted = true
         }
         
         habits[0].log(for: .now, modelContext: modelContext).isCompleted = true
