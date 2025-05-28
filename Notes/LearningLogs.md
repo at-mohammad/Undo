@@ -66,3 +66,6 @@
   - Supports programmatic selection (using `@State` + `selection` parameter)
   - Loads views lazily by default
   - Preserves view state when switching tabs
+
+---
+
