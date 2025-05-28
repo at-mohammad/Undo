@@ -1,5 +1,5 @@
 //
-//  MyChallengesView.swift
+//  MyHabitsView.swift
 //  Undo
 //
 //  Created by AbdelRahman Mohammad on 20/05/2025.
@@ -10,8 +10,8 @@ import SwiftUI
 
 
 
-// MARK: - My Challenges View
-struct MyChallengesView: View {
+// MARK: - My Habits View
+struct MyHabitsView: View {
     // MARK: Properties
     @Environment(\.modelContext) private var modelContext
     @Query(sort: [SortDescriptor(\Habit.creationDate, order: .reverse)]) var habits: [Habit]
@@ -26,7 +26,7 @@ struct MyChallengesView: View {
                 HabitsSectionView(habits: habits, path: $path)
                 Text("Logs: \(logs.count)")
             }
-            .navigationTitle("My Challenges")
+            .navigationTitle("My Habits")
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button("Delete All Habits", systemImage: "trash") {
@@ -84,7 +84,7 @@ struct MyChallengesView: View {
             container.mainContext.insert(habit)
         }
         
-        return MyChallengesView()
+        return MyHabitsView()
             .modelContainer(container)
     } catch {
         return Text("Failed to create container: \(error.localizedDescription)")

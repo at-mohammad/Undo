@@ -12,8 +12,16 @@ import SwiftUI
 // MARK: - Content View
 struct ContentView: View {
     var body: some View {
-        MyChallengesView()
-            .preferredColorScheme(.light)
+        TabView {
+            Tab("My Habits", systemImage: "list.star") {
+                MyHabitsView()
+            }
+            Tab("Settings", systemImage: "gearshape.fill") {
+                SettingsView()
+            }
+        }
+        .tint(.black)
+        .preferredColorScheme(.light)
     }
 }
 

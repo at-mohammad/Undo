@@ -52,3 +52,17 @@
 		- More efficient than creating an empty dictionary and adding values one by one
 
 ---
+
+### 4. `TabView`
+- **Description**:
+  - A view that switches between multiple child views
+- **How It Works**:
+  - Creates a container for tab-based navigation
+  - Manages tab switching and displays the active tab's content
+- **Tab Order**:
+  - First tab is default selection on launch
+  - Order determines leading-to-trailing arrangement
+- **Important Notes**:
+  - Supports programmatic selection (using `@State` + `selection` parameter)
+  - Loads views lazily by default
+  - Preserves view state when switching tabs

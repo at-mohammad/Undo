@@ -3,7 +3,7 @@
 
 ---
 
-### 1. Computed Properties $ Expensive Instances Placement
+### 1. Computed Properties & Expensive Instances Placement
 - **General Best Practice:**  
 	Place computed properties and expensive instances (e.g., `Date`, `DateFormatter`, `Calendar`) as high as possible in the view hierarchy for better performance.
 
@@ -32,5 +32,52 @@
 		- Excessive parent-level recomputations (if forced to update frequently)
 	- Critical Note:
 		- Placing them in the same view as an `@Query` will trigger recomputation on every model context change, as `@Query` refetches data with each modification.
+
+---
+
+### 2. Property Wrappers Guide
+
+- `@State`
+    - **Ownership**: Owned and managed by the view where it's declared
+    - **Purpose**:
+        - Stores mutable state for **value types** (structs, enums, primitives)
+        - Manages **reference types** created in the view (e.g., `@State var user = User()`)
+    - **Lifetime**: Persists across view updates but resets when parent view is recreated
+    - **Use Case**: 
+        - Simple UI state management (toggles, text fields)
+        - Local view-specific state that doesn't need sharing (Like `EditHabitView`)
+    - **Notes**:
+        - Not for persistent data storage (use `@Query` or `@AppStorage` instead)
+
+- `@Binding`
+    - **Connection**: Creates a two-way binding to **value-type** state
+    - **Usage**:
+        - Share state between parent-child views
+        - Modify parent's `@State` property from child view
+    - **Characteristics**:
+        - Derived from existing state (using `$` syntax)
+        - Doesn't own the data - acts as a conduit
+    - **Notes**:
+        - Must apply to all nested child views even if just passing by.
+
+- `@Bindable`
+    - **Purpose**: Enables two-way bindings for properties of `@Observable` classes
+    - **Usage**:
+        - Pass observable objects to child views
+        - Create bindings to individual properties
+    - **When to Use**:
+        - Need to bind to specific properties in SwiftUI controls
+        - Working with iOS 17+ Observation framework
+    - **When to Avoid**: 
+        - Not needed if child view only needs read access (Like just passing by)
+        - If mutating through methods (e.g., `log.count += 1`)
+
+
+- Key Differences
+    |     Wrapper    |  Ownership  |     Type     |    Mutation     |
+    |----------------|-------------|--------------|-----------------|
+    | `@State`       |    Owner    |    Value & Reference types     |     Direct      |
+    | `@Binding`     |  Reference  |  Value types | Through binding |
+    | `@Bindable`    |  Referenc   | Observable class properties    | Through binding |
 
 ---
