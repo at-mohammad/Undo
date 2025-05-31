@@ -12,6 +12,7 @@ import SwiftUI
 // MARK: - Content View
 struct ContentView: View {
     var body: some View {
+        // Reference: LL#4
         TabView {
             Tab("My Habits", systemImage: "list.star") {
                 MyHabitsView()
