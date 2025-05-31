@@ -19,26 +19,7 @@ struct HabitsSectionView: View {
     
     // Reference: TT#1
     // MARK: Expensive Instances
-    private let dateFormatter = DateFormatter()
-    private let calendar = Calendar.current
     private let today = Date.now
-    
-    // MARK: Computed Properties
-    private var weekDaysDictionary: [Date: String] {
-        // Reference: DD#3
-        let weekDays = (0..<7).reversed().compactMap {
-            calendar.date(byAdding: .day, value: -$0, to: today)
-        }
-        
-        // Reference: LL#3
-        return Dictionary(uniqueKeysWithValues: weekDays.map { weekDay in
-            // Reference: DD#4
-            let dayLetter = dateFormatter.shortWeekdaySymbols[
-                calendar.component(.weekday, from: weekDay) - 1
-            ].prefix(1).uppercased()
-            return (weekDay, dayLetter)
-        })
-    }
     
     // MARK: Body
     var body: some View {
@@ -47,7 +28,7 @@ struct HabitsSectionView: View {
         } else {
             List {
                 ForEach(habits) { habit in
-                    HabitRowView(habit: habit, weekDaysDictionary: weekDaysDictionary, today: today, calendar: calendar)
+                    HabitRowView(habit: habit, today: today)
                         .listRowSeparator(.hidden)
                         .padding(12)
                         .contextMenu {
@@ -83,7 +64,6 @@ struct HabitsSectionView: View {
         logs.forEach {
             modelContext.delete($0)
         }
-        //habit.logs?.removeAll() not needed!
     }
 }
 

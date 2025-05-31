@@ -14,9 +14,12 @@ struct HabitRowView: View {
     // MARK: Properties
     @Environment(\.modelContext) private var modelContext
     let habit: Habit
-    let weekDaysDictionary: [Date: String]
     let today: Date
-    let calendar: Calendar
+    
+    // MARK: Computed Properties
+    private var displayableDays: [Date] {
+        DateUtils.generateFullWeeksCovering(from: habit.creationDate, to: today)
+    }
     
     // MARK: Body
     var body: some View {
@@ -34,20 +37,23 @@ struct HabitRowView: View {
                     .font(.headline)
                     .lineLimit(1)
             }
-            //.padding(.bottom) // for TextField, remove if using Text!
             
             /// The week days completion section
             HStack(spacing: 12) {
                 // keys.sorted() = sorting Dates by order, not letters.
-                ForEach(weekDaysDictionary.keys.sorted(), id: \.self) { weekDay in
-                    DayCompletionView(
-                        date: weekDay,
-                        dayLetter: weekDaysDictionary[weekDay] ?? "-",
-                        isCompleted: habit.isCompleted(for: weekDay),
-                        isToday: calendar.isDate(weekDay, inSameDayAs: today),
-                        action: { toggleCompletion(for: weekDay) } // Reference: DD#5
-                    )
+                ScrollView(.horizontal) {
+                    LazyHStack {
+                        ForEach(displayableDays, id: \.self) { day in
+                            DayCompletionView(
+                                habit: habit,
+                                date: day,
+                                today: today,
+                                action: { toggleCompletion(for: day) } // Reference: DD#6
+                            )
+                        }
+                    }
                 }
+                .scrollIndicators(.hidden)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -66,5 +72,5 @@ struct HabitRowView: View {
 
 // MARK: - Preview
 #Preview {
-    HabitRowView(habit: Habit.sampleData[0], weekDaysDictionary: [Date.now: "S"], today: Date.now, calendar: Calendar.current)
+    HabitRowView(habit: Habit.sampleData[0], today: Date.now)
 }

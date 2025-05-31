@@ -5,7 +5,8 @@
 
 ### 1. Computed Properties & Expensive Instances Placement
 - **General Best Practice:**  
-	Place computed properties and expensive instances (e.g., `Date`, `DateFormatter`, `Calendar`) as high as possible in the view hierarchy for better performance.
+	- Place computed properties and expensive instances (e.g., `Date`, `DateFormatter`, `Calendar`) as high as possible in the view hierarchy for better performance.
+    - For instances that are created only once (e.g., `Calendar`, `DateFormatter`), consider declaring them as static properties within a helper struct to ensure a single, shared instance.
 
 - **Why?**
 	- Performance Optimization:
