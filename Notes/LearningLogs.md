@@ -47,7 +47,7 @@
 	- Unique Keys Requirement:
 		- All keys must be unique (hence the name `uniqueKeysWithValues`)
 		- If there are duplicate keys, it will crash at runtime
-	- Performance:
+	- **Performance**:
 		- This is an efficient way to create a dictionary when you have parallel arrays of keys and values
 		- More efficient than creating an empty dictionary and adding values one by one
 
@@ -68,4 +68,3 @@
   - Preserves view state when switching tabs
 
 ---
-

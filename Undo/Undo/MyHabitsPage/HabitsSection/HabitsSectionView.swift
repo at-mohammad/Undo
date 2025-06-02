@@ -32,9 +32,9 @@ struct HabitsSectionView: View {
                         .listRowSeparator(.hidden)
                         .padding(12)
                         .contextMenu {
-                            Button("Edit Habit", action: {editHabit(habit)})
-                            Button("Delete Habit", action: {deleteHabit(habit)})
-                            Button("Reset Progress", action: {resetProgress(habit)})
+                            Button("Edit Habit", systemImage: "pencil", action: {editHabit(habit)})
+                            Button("Delete Habit", systemImage: "trash", action: {deleteHabit(habit)})
+                            Button("Reset Progress", systemImage: "arrow.counterclockwise", action: {resetProgress(habit)})
                         }
                 }
             }

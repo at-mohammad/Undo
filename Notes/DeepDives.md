@@ -239,3 +239,88 @@
     }
 
 ---
+
+### 7. Understanding @State Initialization in SwiftUI Initializers (`init`)
+
+-  **What is `@State`?**
+	- `@State` is a **property wrapper** in SwiftUI.
+	- It allows a view to manage a piece of mutable state.
+	- When a `@State` variable's value changes, SwiftUI automatically re-renders the parts of the view that depend on that state.
+	- Behind the scenes, `@State` creates a managing struct (e.g., `State<ValueType>`) that holds and manages the actual value.
+
+- **Example Declaration:**
+	```swift
+	struct MyView: View {
+		@State private var counter: Int // Declared but not yet initialized with a value here
+		private var initialCount: Int
+
+		// Custom initializer
+		init(initialCount: Int) {
+			self.initialCount = initialCount
+			// We need to initialize 'counter' here. How?
+			// Correct way:
+			self._counter = State(initialValue: initialCount)
+		}
+
+		var body: some View {
+			Text("Count: \(counter)")
+		}
+	}
+	```
+
+- **Accessing the Wrapped Value vs. the Wrapper Itself**
+	Swift provides two ways to interact with a property wrapper:
+
+	- **`propertyName` (e.g., `self.counter`)**:
+		- This refers to the **wrapped value** itself (e.g., the `Int` for `counter`).
+		- This is what you typically use in your view's `body` or in methods *after* the view has been initialized.
+		- SwiftUI provides syntactic sugar for this common case.
+
+	- **`_propertyName` (e.g., `self._counter`)**:
+		- This refers to the **property wrapper instance itself** (e.g., the `State<Int>` struct).
+		- This is necessary when you need to interact directly with the wrapper's mechanics, particularly during initialization or when accessing projected values like `Binding`.
+
+- **Why `self.propertyName = someValue` Doesn't Work for Initialization in `init`**
+	Consider the line: `self.counter = initialCount` within the `init`.
+
+	- **Problem**: This attempts to assign directly to the *wrapped value* (`Int`). However, during the `init` phase (if no default value was provided at declaration), the underlying `State<Int>` wrapper itself hasn't been properly initialized yet.
+	- **Initialization Requirement**: All stored properties of a struct must be fully initialized before the `init` method completes. For `@State` properties, this means the `State<ValueType>` wrapper needs to be constructed and told what its initial managed value is.
+	- Simply assigning to the wrapped value bypasses the explicit initialization of the `State` wrapper that SwiftUI expects in this scenario. It's like trying to use a managed resource before its manager is set up.
+
+- **Why `self.propertyName = State(initialValue: someValue)` Doesn't Work**
+	Consider the line: `self.counter = State(initialValue: initialCount)`.
+
+	- **Problem**: This is a **type mismatch**.
+		- `self.counter` (without the underscore) is expected to be of type `Int` (the wrapped value).
+		- `State(initialValue: initialCount)` creates an instance of `State<Int>` (the wrapper struct).
+	- You cannot assign an instance of `State<Int>` directly to a variable that is syntactically treated as an `Int`. The compiler will error out.
+
+- **The Correct Approach: `self._propertyName = State(initialValue: someValue)`**
+	This is the correct way to initialize a `@State` property within an `init` when its initial value is determined dynamically:
+
+	```swift
+	init(initialCount: Int) {
+		self.initialCount = initialCount // Initializing a regular property
+		self._counter = State(initialValue: initialCount) // Correctly initializing the @State property
+	}
+	```
+
+	- **`self._counter`**: Accesses the actual `State<Int>` property wrapper instance.
+	- **`State(initialValue: initialCount)`**: Creates a new instance of the `State<Int>` wrapper struct and sets its initial managed value to `initialCount`.
+	- **`=`**: Assigns this newly created and configured `State<Int>` wrapper instance to the backing storage for the `counter` property.
+
+- **Why this works:**
+
+	-  **Correct Type**: You are assigning a `State<Int>` object to `self._counter`, which *is* the `State<Int>` wrapper.
+	-  **Explicit Initialization**: This explicitly calls the initializer of the `State` struct, ensuring the property wrapper is set up correctly by SwiftUI with its initial state.
+	-  **Lifecycle Compliance**: This satisfies Swift's requirement that all properties (including the backing storage for property wrappers) are initialized before `init` completes.
+
+- **Summary**
+
+	| Attempted Initialization in `init`            | Why it doesn't work (for `@State` without default value at declaration) |
+	| :------------------------------------------ | :----------------------------------------------------------------------- |
+	| `self.propertyName = someValue`             | Tries to set wrapped value before the `State` wrapper itself is initialized. |
+	| `self.propertyName = State(initialValue: …)` | Type mismatch: Assigning `State<Value>` to `Value`.                      |
+	| **`self._propertyName = State(initialValue: …)`** | **Correct**: Initializes the `State` wrapper itself with the initial value. |
+
+---

@@ -16,9 +16,23 @@ struct HabitRowView: View {
     let habit: Habit
     let today: Date
     
+    // Reference: DD#7
+    @State private var initiallyFocusedWeekStartDate: Date
+    
     // MARK: Computed Properties
-    private var displayableDays: [Date] {
-        DateUtils.generateFullWeeksCovering(from: habit.creationDate, to: today)
+    // Get the displayable week start dates directly from DateUtils
+    private var displayableWeekStartDates: [Date] {
+        DateUtils.generateWeekStartDates(from: habit.creationDate, to: today)
+    }
+    
+    // MARK: Initialization
+    init(habit: Habit, today: Date) {
+        self.habit = habit
+        self.today = today
+        
+        // Reference: DD#7
+        let currentWeeksStartDate = DateUtils.startOfWeek(for: today)
+        self._initiallyFocusedWeekStartDate = State(initialValue: currentWeeksStartDate)
     }
     
     // MARK: Body
@@ -38,31 +52,26 @@ struct HabitRowView: View {
                     .lineLimit(1)
             }
             
-            /// The week days completion section
-            HStack(spacing: 12) {
-                // keys.sorted() = sorting Dates by order, not letters.
-                ScrollView(.horizontal) {
-                    LazyHStack {
-                        ForEach(displayableDays, id: \.self) { day in
-                            DayCompletionView(
-                                habit: habit,
-                                date: day,
-                                today: today,
-                                action: { toggleCompletion(for: day) } // Reference: DD#6
-                            )
-                        }
+            /// The week days section
+            ScrollView(.horizontal) {
+                LazyHStack {
+                    ForEach(displayableWeekStartDates, id: \.self) { weekStartDate in
+                        WeekDaysView(
+                            habit: habit,
+                            weekStartDate: weekStartDate,
+                            today: today,
+                            modelContext: modelContext
+                        )
+                        .containerRelativeFrame(.horizontal) // Each WeekDaysView takes the full-width of the ScrollView's
                     }
                 }
-                .scrollIndicators(.hidden)
+                .scrollTargetLayout() // Marks each WeekDaysView as a potential stopping point
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .scrollIndicators(.hidden)
+            .scrollTargetBehavior(.viewAligned) // Tells the ScrollView to align with one of those full-width WeekDaysViews
+            .scrollPosition(id: .constant(Optional(initiallyFocusedWeekStartDate))) // Sets the initial WeekDaysView
+            .frame(height: 70) // Otherwise the ScrollView will take all available space. Adjust height as needed
         }
-    }
-    
-    // MARK: Functions
-    func toggleCompletion(for date: Date) {
-        let log = habit.log(for: date, modelContext: modelContext)
-        log.isCompleted.toggle()
     }
 }
 

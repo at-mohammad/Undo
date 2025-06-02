@@ -41,7 +41,32 @@ struct DateUtils {
         calendar.date(from: calendar.dateComponents([.year, .month], from: date))!
     }
     
+    /// Generates an array of `Date` objects, each representing the start day (e.g., Sunday/Monday) of a week,
+    /// spanning from the week of the `creationDate` up to and including the week of `today`.
+    /// Assumes `creationDate` is not later than `today`.
+    // Reference: DD#5 (Same logic)
+    static func generateWeekStartDates(from creationDate: Date, to today: Date) -> [Date] {
+        guard creationDate <= today else { return [] }
+        
+        let creationWeekStart = startOfWeek(for: creationDate)
+        let currentWeekStart = startOfWeek(for: today)
+        
+        var weekStarts = [Date]()
+        var weekStartIteration = creationWeekStart
+        
+        while weekStartIteration <= currentWeekStart {
+            weekStarts.append(weekStartIteration)
+            guard let nextWeekStart = calendar.date(byAdding: .weekOfYear, value: 1, to: weekStartIteration) else {
+                break // Should not happen with valid dates
+            }
+            
+            weekStartIteration = nextWeekStart
+        }
+        return weekStarts
+    }
+    
     /// Creates an array of `Date` objects that spans full weeks covering the interval from `startDate` to `endDate`.
+    /// replaced with `generateWeekStartDates`, kept for reference.
     // Reference: DD#5
     static func generateFullWeeksCovering(from startDate: Date, to endDate: Date) -> [Date] {
         guard startDate <= endDate else { return [] }
