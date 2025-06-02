@@ -26,22 +26,25 @@ struct HabitsSectionView: View {
         if habits.isEmpty {
             emptyStateView
         } else {
-            List {
-                ForEach(habits) { habit in
-                    HabitRowView(habit: habit, today: today)
-                        .listRowSeparator(.hidden)
-                        .padding(12)
-                        .contextMenu {
-                            Button("Edit Habit", systemImage: "pencil", action: {editHabit(habit)})
-                            Button("Delete Habit", systemImage: "trash", action: {deleteHabit(habit)})
-                            Button("Reset Progress", systemImage: "arrow.counterclockwise", action: {resetProgress(habit)})
-                        }
+            ScrollView {
+                LazyVStack(spacing: 12) {
+                    ForEach(habits) { habit in
+                        HabitRowView(habit: habit, today: today)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 22)
+                            .contextMenu {
+                                Button("Edit Habit", systemImage: "pencil", action: {editHabit(habit)})
+                                Button("Delete Habit", systemImage: "trash", action: {deleteHabit(habit)})
+                                Button("Reset Progress", systemImage: "arrow.counterclockwise", action: {resetProgress(habit)})
+                            }
+                            //.background(.red)
+                    }
                 }
+                .scrollTargetLayout()
             }
-            .listStyle(.plain)
+            .scrollIndicators(.hidden)
+            .scrollTargetBehavior(.viewAligned)
             .scrollBounceBehavior(.basedOnSize)
-            .scrollContentBackground(.hidden)
-            .scrollDismissesKeyboard(.interactively)
         }
     }
     
