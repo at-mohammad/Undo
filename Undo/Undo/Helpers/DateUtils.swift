@@ -16,6 +16,12 @@ struct DateUtils {
         return formatter
     }() // `dateFormatter` is a stored property (not computed), initialized once by this immediately-invoked closure.
     
+    static let monthFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM"
+        return formatter
+    }()
+    
     // MARK: - Static Methods
     // Reference: DD#3
     static func getDayLetter(for date: Date) -> String {
@@ -26,6 +32,9 @@ struct DateUtils {
     static func getDayNumber(for date: Date) -> Int {
         calendar.component(.day, from: date)
     }
+    static func getMonthAbbreviation(for date: Date) -> String {
+        monthFormatter.string(from: date)
+    }
     
     // Reference: DD#4
     static func startOfWeek(for date: Date) -> Date {
@@ -35,10 +44,6 @@ struct DateUtils {
     static func endOfWeek(for date: Date) -> Date {
         let start = startOfWeek(for: date)
         return calendar.date(byAdding: .day, value: 6, to: start)!
-    }
-    
-    static func startOfMonth(for date: Date) -> Date {
-        calendar.date(from: calendar.dateComponents([.year, .month], from: date))!
     }
     
     /// Generates an array of `Date` objects, each representing the start day (e.g., Sunday/Monday) of a week,

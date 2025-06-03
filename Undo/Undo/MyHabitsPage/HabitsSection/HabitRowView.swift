@@ -17,12 +17,16 @@ struct HabitRowView: View {
     let today: Date
     
     // Reference: DD#7
-    @State private var initiallyFocusedWeekStartDate: Date
+    // required to be optional in order to bound with .scrollPosition(id:)
+    @State private var currentFocusedWeekStartDate: Date?
     
     // MARK: Computed Properties
-    // Get the displayable week start dates directly from DateUtils
     private var displayableWeekStartDates: [Date] {
         DateUtils.generateWeekStartDates(from: habit.creationDate, to: today)
+    }
+    
+    private var currentMonthAbbreviation: String {
+        DateUtils.getMonthAbbreviation(for: currentFocusedWeekStartDate ?? today)
     }
     
     // MARK: Initialization
@@ -31,8 +35,8 @@ struct HabitRowView: View {
         self.today = today
         
         // Reference: DD#7
-        let currentWeeksStartDate = DateUtils.startOfWeek(for: today)
-        self._initiallyFocusedWeekStartDate = State(initialValue: currentWeeksStartDate)
+        let currentWeekStartDate = DateUtils.startOfWeek(for: today)
+        self._currentFocusedWeekStartDate = State(initialValue: currentWeekStartDate)
     }
     
     // MARK: Body
@@ -52,6 +56,12 @@ struct HabitRowView: View {
                     .lineLimit(1)
             }
             
+            /// The month abbreviation
+            Text(currentMonthAbbreviation)
+                .font(.caption.weight(.semibold)) // Example styling
+                .foregroundColor(.secondary)
+                .padding(.leading, 15)
+            
             /// The week days section
             ScrollView(.horizontal) {
                 LazyHStack {
@@ -69,7 +79,7 @@ struct HabitRowView: View {
             }
             .scrollIndicators(.hidden)
             .scrollTargetBehavior(.viewAligned) // Tells the ScrollView to align with one of those full-width WeekDaysViews
-            .scrollPosition(id: .constant(Optional(initiallyFocusedWeekStartDate))) // Sets the initial WeekDaysView
+            .scrollPosition(id: $currentFocusedWeekStartDate) // Sets the initial WeekDaysView and tracks changes
             .frame(height: 70) // Otherwise the ScrollView will take all available space. Adjust height as needed
         }
     }
