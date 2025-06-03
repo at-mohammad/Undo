@@ -31,14 +31,13 @@ struct HabitsSectionView: View {
                     ForEach(habits) { habit in
                         HabitRowView(habit: habit, today: today)
                             .padding(.horizontal, 12)
-                            .padding(.vertical, 22)
+                            .padding(.vertical, 12)
                             .background(.white) // To make white space tappable
                             .contextMenu {
                                 Button("Edit Habit", systemImage: "pencil", action: {editHabit(habit)})
                                 Button("Delete Habit", systemImage: "trash", action: {deleteHabit(habit)})
                                 Button("Reset Progress", systemImage: "arrow.counterclockwise", action: {resetProgress(habit)})
                             }
-                            //.background(.red)
                     }
                 }
                 .scrollTargetLayout()
