@@ -58,7 +58,7 @@ struct HabitRowView: View {
             
             /// The month abbreviation
             Text(currentMonthAbbreviation)
-                .font(.caption.weight(.semibold)) // Example styling
+                .font(.caption.weight(.semibold))
                 .foregroundColor(.secondary)
                 .padding(.leading, 15)
             

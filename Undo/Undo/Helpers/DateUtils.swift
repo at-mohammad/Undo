@@ -73,23 +73,23 @@ struct DateUtils {
     /// Creates an array of `Date` objects that spans full weeks covering the interval from `startDate` to `endDate`.
     /// replaced with `generateWeekStartDates`, kept for reference.
     // Reference: DD#5
-    static func generateFullWeeksCovering(from startDate: Date, to endDate: Date) -> [Date] {
-        guard startDate <= endDate else { return [] }
-        
-        let startOfWeek = startOfWeek(for: startDate)
-        let endOfWeek = endOfWeek(for: endDate)
-        
-        var dates = [Date]()
-        var currentDate = startOfWeek
-        
-        while currentDate <= endOfWeek {
-            dates.append(currentDate)
-            guard let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) else {
-                break // Should not happen with valid dates
-            }
-            currentDate = nextDate
-        }
-        
-        return dates
-    }
+//    static func generateFullWeeksCovering(from startDate: Date, to endDate: Date) -> [Date] {
+//        guard startDate <= endDate else { return [] }
+//        
+//        let startOfWeek = startOfWeek(for: startDate)
+//        let endOfWeek = endOfWeek(for: endDate)
+//        
+//        var dates = [Date]()
+//        var currentDate = startOfWeek
+//        
+//        while currentDate <= endOfWeek {
+//            dates.append(currentDate)
+//            guard let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) else {
+//                break // Should not happen with valid dates
+//            }
+//            currentDate = nextDate
+//        }
+//        
+//        return dates
+//    }
 }

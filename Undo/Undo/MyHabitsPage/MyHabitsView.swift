@@ -24,7 +24,6 @@ struct MyHabitsView: View {
             VStack {
                 HeaderSectionView(habits: habits)
                 HabitsSectionView(habits: habits, path: $path)
-                Text("Logs: \(logs.count)")
             }
             .navigationTitle("My Habits")
             .toolbar {

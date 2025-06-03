@@ -31,7 +31,7 @@ struct ProgressCardView: View {
     
     // MARK: Body
     var body: some View {
-        HStack(spacing: 150) {
+        HStack {
             VStack(alignment: .leading, spacing: 5) {
                 Text(encouragementText)
                     .font(.headline)
@@ -41,6 +41,8 @@ struct ProgressCardView: View {
                     .font(.subheadline)
                     .foregroundStyle(.white.opacity(0.8))
             }
+            
+            Spacer()
             
             CircularProgressView(progress: progress)
                 .frame(width: 60, height: 60)
