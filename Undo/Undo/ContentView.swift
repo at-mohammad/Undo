@@ -11,6 +11,9 @@ import SwiftUI
 
 // MARK: - Content View
 struct ContentView: View {
+    // Stores whether the onboarding has been completed. Persists across app launches.
+    @AppStorage("isFirstTimeUserExperience") private var isFirstTimeUserExperience = true
+    
     var body: some View {
         // Reference: LL#4
         TabView {
@@ -23,6 +26,15 @@ struct ContentView: View {
         }
         .tint(.black)
         .preferredColorScheme(.light)
+        // Like `.sheet`, but covers the entire screen.
+        .fullScreenCover(isPresented: $isFirstTimeUserExperience) {
+            OnboardingView(isFirstTimeUserExperience: $isFirstTimeUserExperience)
+        }
+        
+        // for preview only! remove later!!!
+        .onAppear {
+            isFirstTimeUserExperience = true
+        }
     }
 }
 
