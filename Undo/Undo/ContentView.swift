@@ -20,8 +20,8 @@ struct ContentView: View {
             Tab("My Habits", systemImage: "list.star") {
                 MyHabitsView()
             }
-            Tab("Settings", systemImage: "gearshape.fill") {
-                SettingsView()
+            Tab("About", systemImage: "info.circle") {
+                AboutView()
             }
         }
         .tint(.black)
