@@ -23,16 +23,18 @@ struct ProgressCardView: View {
     
     private var encouragementText: String {
         switch progress {
-        case 1.0: return "All done! 🎉"
-        case 0.75...: return "Almost there!"
-        default: return "Keep it up!"
+        case 1.0: return "Well done! 🎉"
+        case 0.75...: return "Just a bit more!"
+        case 0.50...: return "Almost there!"
+        case 0.01...: return "Keep it up!"
+        default: return "Let's get started!"
         }
     }
     
     // MARK: Body
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 5) {
+            VStack(alignment: .center, spacing: 5) {
                 Text(encouragementText)
                     .font(.headline)
                     .foregroundStyle(.white)
@@ -41,12 +43,16 @@ struct ProgressCardView: View {
                     .font(.subheadline)
                     .foregroundStyle(.white.opacity(0.8))
             }
+            .frame(width: 150)
             
             Spacer()
             
             CircularProgressView(progress: progress)
                 .frame(width: 60, height: 60)
         }
+        
+        // for preview only! remove later!!!
+        .background(.black)
     }
 }
 
@@ -57,5 +63,4 @@ struct ProgressCardView: View {
 // MARK: - Preview
 #Preview {
     ProgressCardView(completedCount: 1, totalCount: 4)
-        .preferredColorScheme(.dark)
 }

@@ -30,7 +30,7 @@ struct SingleOnboardingView: View {
             Text(page.description)
                 .font(.body)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.secondary)
+                .foregroundColor(.black.opacity(0.55))
                 .padding(.horizontal, 30)
             
             Spacer()

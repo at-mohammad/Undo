@@ -19,6 +19,7 @@ struct EditHabitView: View {
     let habit: Habit
     @State var habitName: String
     @State var selectedIcon: String
+    @State var creationDate: Date
     
     private let iconColumns = [GridItem(.adaptive(minimum: 50, maximum: 100))]
     private let iconOptions = [
@@ -31,6 +32,7 @@ struct EditHabitView: View {
         Form {
             Section("Habit Name") {
                 TextField("e.g., Drink Water", text: $habitName)
+                    .submitLabel(.done)
             }
             
             Section("Choose Icon") {
@@ -49,22 +51,36 @@ struct EditHabitView: View {
                 .padding(.vertical, 8)
             }
             
-            Button("Save") {
-                habit.name = habitName
-                habit.iconName = selectedIcon
-                
-                // To avoid inserting the same habit more then once.
-                if !habit.isInserted {
-                    modelContext.insert(habit)
-                    habit.isInserted = true
-                }
-                
-                dismiss()
+            Section("Start Date") {
+                DatePicker("First day of your habit", selection: $creationDate, in: ...Date.now, displayedComponents: .date)
             }
-            .disabled(habitName.trimmingCharacters(in: .whitespaces).isEmpty)
         }
         .navigationTitle("Habit Details")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+                Button("Save") {
+                    saveHabit()
+                }
+                .disabled(habitName.trimmingCharacters(in: .whitespaces).isEmpty)
+                .buttonStyle(.plain)
+            }
+        }
+    }
+    
+    // MARK: Functions
+    private func saveHabit() {
+        habit.name = habitName
+        habit.iconName = selectedIcon
+        habit.creationDate = creationDate
+        
+        // To avoid inserting the same habit more then once.
+        if !habit.isInserted {
+            modelContext.insert(habit)
+            habit.isInserted = true
+        }
+        
+        dismiss()
     }
 }
 
@@ -74,5 +90,5 @@ struct EditHabitView: View {
 
 // MARK: - Preview
 #Preview {
-    EditHabitView(habit: Habit.sampleData[0], habitName: "", selectedIcon: "star")
+    EditHabitView(habit: Habit.sampleData[0], habitName: "", selectedIcon: "star", creationDate: Date.now)
 }
