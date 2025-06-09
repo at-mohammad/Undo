@@ -51,7 +51,6 @@ struct MyHabitsView: View {
                         let habit = Habit()
                         path = [habit]
                     }
-                    .buttonStyle(.plain)
                 }
             }
             .navigationDestination(for: Habit.self) { habit in

@@ -63,7 +63,6 @@ struct EditHabitView: View {
                     saveHabit()
                 }
                 .disabled(habitName.trimmingCharacters(in: .whitespaces).isEmpty)
-                .buttonStyle(.plain)
             }
         }
     }
