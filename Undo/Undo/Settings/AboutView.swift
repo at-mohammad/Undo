@@ -9,42 +9,6 @@ import SwiftUI
 
 
 
-// MARK: - Socials View
-struct SocialsView: View {
-    let image: String
-    let url: URL
-    
-    var body: some View {
-        Link(destination: url) {
-            Image(image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 32, height: 32)
-        }
-    }
-}
-
-
-
-// MARK: - Attribution View
-struct AttributionView: View {
-    let work: String
-    let author: String
-    let url: URL
-    
-    var body: some View {
-        HStack {
-            Text(work + " by")
-            Link(destination: url) {
-                Text(author)
-                    .bold()
-            }
-        }
-    }
-}
-
-
-
 // MARK: - About View
 struct AboutView: View {
     // MARK: Properties
@@ -71,7 +35,9 @@ struct AboutView: View {
             List {
                 Section("Developer") {
                     NavigationLink("About Me") {
-                        DeveloperDetailView()
+                        DeveloperDetailsView()
+                            .navigationTitle("About Me")
+                            .navigationBarTitleDisplayMode(.inline)
                     }
                 }
                 
@@ -101,7 +67,6 @@ struct AboutView: View {
                 Section("Legal") {
                     NavigationLink("Attributions") {
                         List {
-                            AttributionView(work: "All Icons", author: "Flaticon", url: flatIconURL)
                             AttributionView(work: "App Icon", author: "icon wind", url: iconWindURL)
                             AttributionView(work: "Social Media Icons", author: "Freepik", url: freePikURL)
                         }
@@ -113,12 +78,12 @@ struct AboutView: View {
                 Section {
                     VStack {
                         Text("Version: \(appVersion)")
-                        Text("Created with love by Pixel Arabi") // TODO: Make it better
+                        Text("Created with love by Pixel Arabi")
                         HStack(spacing: 25) {
-                            SocialsView(image: "tiktok", url: tiktokURL)
-                            SocialsView(image: "youtube", url: youtubeURL)
-                            SocialsView(image: "instagram", url: instagramURL)
-                            SocialsView(image: "twitter", url: xURL)
+                            SocialView(image: "tiktok", url: tiktokURL)
+                            SocialView(image: "youtube", url: youtubeURL)
+                            SocialView(image: "instagram", url: instagramURL)
+                            SocialView(image: "twitter", url: xURL)
                         }
                     }
                 }
