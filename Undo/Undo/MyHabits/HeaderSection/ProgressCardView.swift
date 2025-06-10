@@ -50,9 +50,6 @@ struct ProgressCardView: View {
             CircularProgressView(progress: progress)
                 .frame(width: 60, height: 60)
         }
-        
-        // for preview only! remove later!!!
-        .background(.black)
     }
 }
 

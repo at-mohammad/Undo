@@ -30,11 +30,6 @@ struct ContentView: View {
         .fullScreenCover(isPresented: $isFirstTimeUserExperience) {
             OnboardingView(isFirstTimeUserExperience: $isFirstTimeUserExperience)
         }
-        
-        // for preview only! remove later!!!
-        .onAppear {
-            isFirstTimeUserExperience = true
-        }
     }
 }
 

@@ -26,26 +26,6 @@ struct MyHabitsView: View {
             }
             .navigationTitle("My Habits")
             .toolbar {
-                // for preview only! remove later!!!
-                ToolbarItemGroup(placement: .topBarLeading) {
-                    Button("Delete All Habits", systemImage: "trash") {
-                        habits.forEach {
-                            modelContext.delete($0)
-                        }
-                    }
-                    Button("Add Sample Habits", systemImage: "plus.app.fill") {
-                        let habits = Habit.sampleData
-                        
-                        habits.forEach { habit in
-                            _ = habit.log(for: .now, modelContext: modelContext)
-                            modelContext.insert(habit)
-                            habit.isInserted = true
-                        }
-                        
-                        habits[0].log(for: .now, modelContext: modelContext).isCompleted = true
-                    }
-                }
-                
                 ToolbarItemGroup(placement: .primaryAction) {
                     Button("Add Habit", systemImage: "plus") {
                         let habit = Habit()
