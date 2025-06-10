@@ -13,7 +13,7 @@ import SwiftUI
 struct DeveloperDetailsView: View {
     // MARK: Properties
     private let bioText: String = """
-    I created 'undo' because I believe that breaking a bad habit starts with a single, simple step. This app is the tool I wished I had, a minimalist way to track progress and stay motivated. I hope it helps you on your journey as much as it has helped me on mine.
+    I created 'undo' because I believe that changing your habits starts with a single, simple step. This app is the tool I wished I had, a minimalist way to track progress and stay motivated. I hope it helps you on your journey as much as it has helped me on mine.
     """
     
     // MARK: Body

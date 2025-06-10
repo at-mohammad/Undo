@@ -13,9 +13,9 @@ import SwiftUI
 struct OnboardingView: View {
     // MARK: Properties
     @Binding var isFirstTimeUserExperience: Bool
-    
     private let pages = OnboardingPage.samplePages
     @State private var currentPageIndex = 0
+    @State private var buttonTapTrigger = 0 // A dedicated trigger to isolate button haptics from swipe gestures.
 
     // MARK: Body
     var body: some View {
@@ -33,6 +33,7 @@ struct OnboardingView: View {
             
             Button {
                 if currentPageIndex < pages.count - 1 {
+                    buttonTapTrigger += 1
                     withAnimation {
                         currentPageIndex += 1
                     }
@@ -50,6 +51,8 @@ struct OnboardingView: View {
             }
             .padding(.horizontal, 40)
             .padding(.bottom, 50)
+            .sensoryFeedback(.selection, trigger: buttonTapTrigger) // For each "Next" button tap
+            .sensoryFeedback(.success, trigger: isFirstTimeUserExperience) // For the final "Get Started" tap
         }
     }
 }

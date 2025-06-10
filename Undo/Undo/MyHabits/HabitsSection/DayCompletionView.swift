@@ -52,6 +52,8 @@ struct DayCompletionView: View {
             }
             .buttonStyle(.plain) // Disable tapping all List row buttons at once
             .disabled(isDisabled)
+            // If today, provide increase/decrease haptics. Otherwise, none.
+            .sensoryFeedback(isToday ? (isCompleted ? .increase : .decrease) : .impact(weight: .light, intensity: 0), trigger: isCompleted)
             
             Text(dayLetter) // Day initial
                 .font(.caption)
