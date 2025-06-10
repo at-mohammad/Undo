@@ -15,7 +15,7 @@ struct AboutView: View {
     private let appVersion = AppInfo.version
     private let buildNumber = AppInfo.buildNumber
     private let feedbackEmail = "pixelarabiofficial@gmail.com"
-    private let githubURL = URL(string: "https://github.com/3BDLR7MN/Undo.git")!
+    private let githubURL = URL(string: "https://github.com/PixelArabi/Undo.git")!
     
     // TODO: Replace with your actual App Id
     private let appReviewURL = URL(string: "https://apps.apple.com/app/id1523772947?action=write-review")!
@@ -42,10 +42,9 @@ struct AboutView: View {
                     }
                 }
                 
-                // TODO: Uncomment if repo made public
-//                Section("Resources") {
-//                    Link("Source Code on GitHub", destination: githubURL)
-//                }
+                Section("Resources") {
+                    Link("Source Code on GitHub", destination: githubURL)
+                }
                 
                 Section("Support") {
                     // TODO: Uncomment when your own App Id is used
