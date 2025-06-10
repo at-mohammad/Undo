@@ -44,7 +44,6 @@ struct HabitsSectionView: View {
             }
             .scrollIndicators(.hidden)
             .scrollTargetBehavior(.viewAligned)
-            .scrollBounceBehavior(.basedOnSize)
         }
     }
     
