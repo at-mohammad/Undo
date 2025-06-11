@@ -6,10 +6,10 @@ Welcome to the official support page for the Undo app. If you're having trouble 
 
 ### Frequently Asked Questions (FAQ)
 
-**Q: How do I delete a habit?**
+**Q: How do I delete a habit?**<br>
 A: Long-press on any habit on the "My Habits" screen to bring up a context menu where you can delete the habit.
 
-**Q: Can I reset my progress for a single habit?**
+**Q: Can I reset my progress for a single habit?**<br>
 A: Yes. Long-press on any habit on the "My Habits" screen to bring up a context menu where you can reset its progress.
 
 ---
