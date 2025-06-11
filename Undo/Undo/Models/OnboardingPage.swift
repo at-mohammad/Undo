@@ -12,7 +12,7 @@ struct OnboardingPage {
     static var samplePages: [OnboardingPage] = [
         OnboardingPage(imageName: "figure.walk.circle.fill",
                        title: "Welcome to Undo!",
-                       description: "Start building positive habits and track your progress effortlessly."),
+                       description: "Start changing your habits and track your progress effortlessly."),
         OnboardingPage(imageName: "plus.circle.fill",
                        title: "Add & Customize",
                        description: "Easily create new habits and personalize them with a variety of icons."),

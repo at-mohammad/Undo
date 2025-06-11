@@ -48,12 +48,12 @@ struct AboutView: View {
                 
                 Section("Support") {
                     // TODO: Uncomment when your own App Id is used
-                    Link(destination: appReviewURL) {
-                        Label("Leave a Review", systemImage: "star.fill")
-                    }
-                    ShareLink(item: appShareURL) {
-                        Label("Share the App", systemImage: "square.and.arrow.up.fill")
-                    }
+//                    Link(destination: appReviewURL) {
+//                        Label("Leave a Review", systemImage: "star.fill")
+//                    }
+//                    ShareLink(item: appShareURL) {
+//                        Label("Share the App", systemImage: "square.and.arrow.up.fill")
+//                    }
                     Link(destination: URL(string: "mailto:\(feedbackEmail)?subject=Feedback%20for%20Undo%20App%20(v\(appVersion))")!) {
                         Label("Send Feedback", systemImage: "envelope.fill")
                     }
