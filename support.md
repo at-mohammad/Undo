@@ -29,8 +29,8 @@ For general questions, you can connect with me on social media or by email. If y
 * **Email:** [pixelarabiofficial@gmail.com](mailto:pixelarabiofficial@gmail.com)
 * **TikTok:** [@pixelarabi](https://www.tiktok.com/@pixelarabi)
 * **Instagram:** [@pixelarabi](https://www.instagram.com/pixelarabi)
-* **X (Twitter):** [@pixelarabi_](https://x.com/pixelarabi_)
 * **YouTube:** [@pixelarabi](https://www.youtube.com/@pixelarabi)
+* **X (Twitter):** [@pixelarabi_](https://x.com/pixelarabi_)
 
 * **Buy me a coffee ☕️** [@pixelarabi](https://buymeacoffee.com/pixelarabi)
 

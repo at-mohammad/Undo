@@ -55,13 +55,14 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## ☕️ Connect & Support
 
-Created with love by Pixel Arabi.
+Created with ❤️ by Pixel Arabi.
 
 * **[Support Page](./support.md)**
 * **[Privacy Policy](./privacy.md)**
 * **Email:** [pixelarabiofficial@gmail.com](mailto:pixelarabiofficial@gmail.com)
 * **TikTok:** [@pixelarabi](https://www.tiktok.com/@pixelarabi)
 * **Instagram:** [@pixelarabi](https://www.instagram.com/pixelarabi)
-* **X (Twitter):** [@pixelarabi_](https://x.com/pixelarabi_)
 * **YouTube:** [@pixelarabi](https://www.youtube.com/@pixelarabi)
+* **X (Twitter):** [@pixelarabi_](https://x.com/pixelarabi_)
+
 * **Buy me a coffee ☕️** [@pixelarabi](https://buymeacoffee.com/pixelarabi)
