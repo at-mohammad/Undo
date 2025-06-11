@@ -28,10 +28,10 @@ For general questions, you can connect with me on social media or by email. If y
 
 * **Email:** [pixelarabiofficial@gmail.com](mailto:pixelarabiofficial@gmail.com)
 * **TikTok:** [@pixelarabi](https://www.tiktok.com/@pixelarabi)
-* **Instagram:** [@pixelarabi](https://www.instagram.com/pixelarabi)
 * **YouTube:** [@pixelarabi](https://www.youtube.com/@pixelarabi)
+* **Instagram:** [@pixelarabi](https://www.instagram.com/pixelarabi)
 * **X (Twitter):** [@pixelarabi_](https://x.com/pixelarabi_)
 
-* **Buy me a coffee ☕️** [@pixelarabi](https://buymeacoffee.com/pixelarabi)
+* **[Buy Me a Coffee ☕️](https://buymeacoffee.com/pixelarabi)**
 
 Thank you for using Undo!
