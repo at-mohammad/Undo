@@ -21,7 +21,13 @@ struct EditHabitView: View {
     @State var selectedIcon: String
     @State var creationDate: Date
     
-    private let iconColumns = [GridItem(.adaptive(minimum: 50, maximum: 100))]
+    private let iconColumns = [
+        GridItem(.fixed(65)),
+        GridItem(.fixed(65)),
+        GridItem(.fixed(65)),
+        GridItem(.fixed(65)),
+        GridItem(.fixed(65))
+    ]
     private let iconOptions = [
         "star", "flame", "leaf", "drop", "bolt", "heart", "gift", "figure.walk",
         "book", "music.note", "moon", "sun.max", "cup.and.saucer", "laptopcomputer", "brain.head.profile"
