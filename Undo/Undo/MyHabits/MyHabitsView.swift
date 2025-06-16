@@ -33,7 +33,7 @@ struct MyHabitsView: View {
                     Button("Add Habit", systemImage: "plus") {
                         let habit = Habit()
                         path = [habit]
-                        addHabitTip.invalidate(reason: .actionPerformed)
+                        addHabitTip.invalidate(reason: .actionPerformed) // Stop showing the tip again.
                     }
                     .popoverTip(!isFirstTimeUserExperience ? addHabitTip : nil, arrowEdge: .top)
                 }
@@ -61,7 +61,7 @@ struct MyHabitsView: View {
         
         return MyHabitsView()
             .task {
-                try? Tips.resetDatastore()
+                try? Tips.resetDatastore() // Make all tips eligible for display again. Helpful for testing tips behavior
                 try? Tips.configure([
                     .displayFrequency(.immediate),
                     .datastoreLocation(.applicationDefault)

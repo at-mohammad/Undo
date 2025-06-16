@@ -7,7 +7,7 @@
 
 import SwiftData
 import SwiftUI
-import TipKit
+import TipKit // Reference: DD#8
 
 @main
 struct UndoApp: App {
@@ -16,8 +16,8 @@ struct UndoApp: App {
             ContentView()
                 .task {
                     try? Tips.configure([
-                        .displayFrequency(.immediate),
-                        .datastoreLocation(.applicationDefault)
+                        .displayFrequency(.immediate), // Show tips immediately
+                        .datastoreLocation(.applicationDefault) // Store TipKit data in the default location
                     ])
                 }
         }

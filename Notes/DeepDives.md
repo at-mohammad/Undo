@@ -324,3 +324,99 @@
 	| **`self._propertyName = State(initialValue: …)`** | **Correct**: Initializes the `State` wrapper itself with the initial value. |
 
 ---
+
+### 8. TipKit Integration for In-App Guidance
+
+- **What it does**:
+    Provides a standardized, easy-to-use framework for displaying feature hints and guidance to users within the app. TipKit manages the logic for when and how often to show these tips, and SwiftUI provides simple view modifiers and components to display them.
+
+- **Implementation Breakdown**:
+    The integration of TipKit in the "Undo" app can be broken down into four key steps:
+
+    -  **Defining the Tips**:
+        -   First, we define the structure of each tip by creating a struct that conforms to the `Tip` protocol.
+        -   Each tip must have a `title`, and can optionally include a `message` and an `image`.
+
+        -   **Code (`Models/Tips.swift`)**:
+            ```swift
+            import Foundation
+            import TipKit
+
+            struct AddHabitTip: Tip {
+                var title: Text {
+                    Text("Add Your First Habit")
+                }
+
+                var message: Text? {
+                    Text("Tap the plus button to create a new habit.")
+                        .foregroundStyle(.gray)
+                }
+            }
+
+            struct HabitContextMenuTip: Tip {
+                var title: Text {
+                    Text("Manage Your Habit")
+                }
+
+                var message: Text? {
+                    Text("Long-press on a habit to see more options.")
+                        .foregroundStyle(.gray)
+                }
+
+                var image: Image? {
+                    Image(systemName: "hand.tap.fill")
+                }
+            }
+            ```
+
+    -  **Configuring the TipKit Environment**:
+        -   At the app's launch, we need to configure the global settings for TipKit. This is done once.
+        -   `Tips.configure()` sets up parameters like display frequency and where the TipKit data (like which tips have been seen) should be stored.
+
+        -   **Code (`UndoApp.swift`)**:
+            ```swift
+            .task {
+                try? Tips.configure([
+                    .displayFrequency(.immediate),
+                    .datastoreLocation(.applicationDefault)
+                ])
+            }
+            ```
+
+    -  **Displaying the Tips in the UI**:
+        -   TipKit offers two primary ways to display tips in SwiftUI: as a popover or inline.
+        -   **Popover**: The `.popoverTip()` modifier attaches a tip to a specific view. The tip appears as a popover pointing to that view. This is great for contextual hints tied to a button or UI element.
+        -   **Inline View**: `TipView` is a dedicated SwiftUI view that displays the tip directly within the view hierarchy. This is useful for placing tips in a `List` or `VStack`.
+
+        -   **Code Examples**:
+            -   **Popover Style (`MyHabitsView.swift`)**:
+                ```swift
+                Button("Add Habit", systemImage: "plus") {
+                    // ...
+                }
+                .popoverTip(addHabitTip, arrowEdge: .top)
+                ```
+            -   **Inline Style (`HabitsSectionView.swift`)**:
+                ```swift
+                LazyVStack(spacing: 12) {
+                    TipView(habitContextMenuTip)
+                    ForEach(habits) { habit in
+                       // ...
+                    }
+                }
+                ```
+
+    -  **Controlling Tip Eligibility**:
+        -   A crucial part of TipKit is managing when a tip should stop appearing. This is done by invalidating it.
+        -   Calling `tip.invalidate(reason: .actionPerformed)` marks the tip as "seen" or "acted upon," preventing it from being shown again. This ensures that users are not repeatedly shown tips for features they have already used.
+
+        -   **Code (`MyHabitsView.swift`)**:
+            ```swift
+            Button("Add Habit", systemImage: "plus") {
+                let habit = Habit()
+                path = [habit]
+                addHabitTip.invalidate(reason: .actionPerformed)
+            }
+            ```
+
+---
