@@ -2,7 +2,7 @@
 //  SocialView.swift
 //  Undo
 //
-//  Created by AbdelRahman Mohammad on 10/06/2025.
+//  Created by Pixel Arabi on 10/06/2025.
 //
 
 import SwiftUI

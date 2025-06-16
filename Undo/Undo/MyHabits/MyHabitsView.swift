@@ -2,11 +2,12 @@
 //  MyHabitsView.swift
 //  Undo
 //
-//  Created by AbdelRahman Mohammad on 20/05/2025.
+//  Created by Pixel Arabi on 20/05/2025.
 //
 
 import SwiftData
 import SwiftUI
+import TipKit
 
 
 
@@ -15,7 +16,9 @@ struct MyHabitsView: View {
     // MARK: Properties
     @Environment(\.modelContext) private var modelContext
     @Query(sort: [SortDescriptor(\Habit.creationDate, order: .reverse)]) var habits: [Habit]
+    @AppStorage("isFirstTimeUserExperience") private var isFirstTimeUserExperience = true
     @State private var path = [Habit]()
+    private let addHabitTip = AddHabitTip()
     
     // MARK: Body
     var body: some View {
@@ -30,7 +33,9 @@ struct MyHabitsView: View {
                     Button("Add Habit", systemImage: "plus") {
                         let habit = Habit()
                         path = [habit]
+                        addHabitTip.invalidate(reason: .actionPerformed)
                     }
+                    .popoverTip(!isFirstTimeUserExperience ? addHabitTip : nil, arrowEdge: .top)
                 }
             }
             .navigationDestination(for: Habit.self) { habit in
@@ -55,6 +60,13 @@ struct MyHabitsView: View {
         }
         
         return MyHabitsView()
+            .task {
+                try? Tips.resetDatastore()
+                try? Tips.configure([
+                    .displayFrequency(.immediate),
+                    .datastoreLocation(.applicationDefault)
+                ])
+            }
             .modelContainer(container)
     } catch {
         return Text("Failed to create container: \(error.localizedDescription)")

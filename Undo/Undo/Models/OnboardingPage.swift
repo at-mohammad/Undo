@@ -2,7 +2,7 @@
 //  OnboardingPage.swift
 //  Undo
 //
-//  Created by AbdelRahman Mohammad on 03/06/2025.
+//  Created by Pixel Arabi on 03/06/2025.
 //
 
 import Foundation

@@ -2,11 +2,12 @@
 //  HabitsSectionView.swift
 //  Undo
 //
-//  Created by AbdelRahman Mohammad on 21/05/2025.
+//  Created by Pixel Arabi on 21/05/2025.
 //
 
 import SwiftData
 import SwiftUI
+import TipKit
 
 
 
@@ -16,6 +17,7 @@ struct HabitsSectionView: View {
     @Environment(\.modelContext) private var modelContext
     let habits: [Habit]
     @Binding var path: [Habit]
+    private let habitContextMenuTip = HabitContextMenuTip()
     
     // Reference: TT#1
     // MARK: Expensive Instances
@@ -28,6 +30,7 @@ struct HabitsSectionView: View {
         } else {
             ScrollView {
                 LazyVStack(spacing: 12) {
+                    TipView(habitContextMenuTip)
                     ForEach(habits) { habit in
                         HabitRowView(habit: habit, today: today)
                             .padding(.horizontal, 12)
@@ -50,7 +53,11 @@ struct HabitsSectionView: View {
     
     // MARK: Subviews
     private var emptyStateView: some View {
-        ContentUnavailableView("No Habits", systemImage: "plus", description: Text("Tap the \(Image(systemName: "plus")) sign to add your first habit!"))
+        ContentUnavailableView {
+            Text("No Habits")
+        } description: {
+            Text("Tap the \(Image(systemName: "plus")) sign to add your first habit!")
+        }
     }
     
     // MARK: Functions
@@ -77,4 +84,11 @@ struct HabitsSectionView: View {
 // MARK: - Preview
 #Preview {
     HabitsSectionView(habits: Habit.sampleData, path: .constant(Habit.sampleData))
+        .task {
+            try? Tips.resetDatastore()
+            try? Tips.configure([
+                .displayFrequency(.immediate),
+                .datastoreLocation(.applicationDefault)
+            ])
+        }
 }
