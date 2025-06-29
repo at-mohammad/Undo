@@ -17,9 +17,21 @@ struct EditHabitView: View {
     @Environment(\.dismiss) private var dismiss
     
     let habit: Habit
-    @State var habitName: String
-    @State var selectedIcon: String
-    @State var creationDate: Date
+    @State private var habitName: String
+    @State private var selectedIcon: String
+    @State private var creationDate: Date
+    @State private var reminderEnabled: Bool
+    @State private var reminderTime: Date
+    
+    init(habit: Habit) {
+        self.habit = habit
+        self._habitName = State(initialValue: habit.name)
+        self._selectedIcon = State(initialValue: habit.iconName)
+        self._creationDate = State(initialValue: habit.creationDate)
+        
+        self._reminderEnabled = State(initialValue: habit.reminder?.isEnabled ?? false)
+        self._reminderTime = State(initialValue: habit.reminder?.time ?? .now)
+    }
     
     private let iconColumns = [
         GridItem(.fixed(65)),
@@ -60,6 +72,13 @@ struct EditHabitView: View {
             Section("Start Date") {
                 DatePicker("First day of your habit", selection: $creationDate, in: ...Date.now, displayedComponents: .date)
             }
+            
+            Section("Reminders") {
+                Toggle("Enable Reminders", isOn: $reminderEnabled.animation())
+                if reminderEnabled {
+                    DatePicker("Reminder Time", selection: $reminderTime, displayedComponents: .hourAndMinute)
+                }
+            }
         }
         .navigationTitle("Habit Details")
         .navigationBarTitleDisplayMode(.inline)
@@ -79,6 +98,8 @@ struct EditHabitView: View {
         habit.iconName = selectedIcon
         habit.creationDate = creationDate
         
+        habit.updateReminder(isEnabled: reminderEnabled, time: reminderTime, modelContext: modelContext)
+        
         // To avoid inserting the same habit more then once.
         if !habit.isInserted {
             modelContext.insert(habit)
@@ -95,5 +116,5 @@ struct EditHabitView: View {
 
 // MARK: - Preview
 #Preview {
-    EditHabitView(habit: Habit.sampleData[0], habitName: "", selectedIcon: "star", creationDate: Date.now)
+    EditHabitView(habit: Habit.sampleData[0])
 }

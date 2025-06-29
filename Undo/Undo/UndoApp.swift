@@ -14,6 +14,9 @@ struct UndoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    NotificationManager.instance.requestAuthorization()
+                }
                 .task {
                     try? Tips.configure([
                         .displayFrequency(.immediate), // Show tips immediately

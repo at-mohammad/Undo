@@ -66,6 +66,9 @@ struct HabitsSectionView: View {
     }
     
     private func deleteHabit(_ habit: Habit) {
+        if let reminder = habit.reminder {
+            NotificationManager.instance.unscheduleNotification(for: reminder)
+        }
         modelContext.delete(habit)
     }
     

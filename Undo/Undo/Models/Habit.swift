@@ -26,6 +26,7 @@ class Habit {
     
     // Marked as optional to handle cases where: logs haven't been created yet, failed to load, or was intentionally cleared.
     @Relationship(deleteRule: .cascade) var logs: [HabitLog]?
+    @Relationship(deleteRule: .cascade) var reminder: Reminder?
     
     
     
@@ -66,5 +67,28 @@ class Habit {
         modelContext.insert(newLog)
         self.logs?.append(newLog)
         return newLog
+    }
+    
+    func updateReminder(isEnabled: Bool, time: Date, modelContext: ModelContext) {
+        if isEnabled {
+            if let reminder = self.reminder {
+                // If a reminder already exists, just update it.
+                reminder.time = time
+                reminder.isEnabled = true
+                NotificationManager.instance.scheduleNotification(for: reminder)
+            } else {
+                // If no reminder exists, create a new one.
+                let newReminder = Reminder(isEnabled: true, time: time)
+                self.reminder = newReminder
+                NotificationManager.instance.scheduleNotification(for: newReminder)
+            }
+        } else {
+            // If the toggle is turned off, delete the existing reminder.
+            if let reminder = self.reminder {
+                NotificationManager.instance.unscheduleNotification(for: reminder)
+                modelContext.delete(reminder)
+                self.reminder = nil
+            }
+        }
     }
 }

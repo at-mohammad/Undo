@@ -39,7 +39,7 @@ struct MyHabitsView: View {
                 }
             }
             .navigationDestination(for: Habit.self) { habit in
-                EditHabitView(habit: habit, habitName: habit.name, selectedIcon: habit.iconName, creationDate: habit.creationDate)
+                EditHabitView(habit: habit)
             }
         }
     }
