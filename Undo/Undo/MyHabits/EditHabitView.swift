@@ -115,6 +115,11 @@ struct EditHabitView: View {
             habit.isInserted = true
         }
         
+        // Explicitly save changes to the database immediately.
+        // This prevents a condition where deleting a habit right after saving it
+        // could cause it to revert to its previous state instead of deleting.
+        try? modelContext.save()
+        
         dismiss()
     }
 }
