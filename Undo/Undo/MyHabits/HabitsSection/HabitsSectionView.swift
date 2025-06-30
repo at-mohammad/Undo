@@ -66,6 +66,7 @@ struct HabitsSectionView: View {
     }
     
     private func deleteHabit(_ habit: Habit) {
+        // Unschedule any pending notifications for this habit before deletion.
         if let reminder = habit.reminder {
             NotificationManager.instance.unscheduleNotification(for: reminder)
         }

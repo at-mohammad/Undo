@@ -9,8 +9,19 @@ import Foundation
 import UserNotifications
 
 class NotificationManager {
+    // MARK: - Static Properties
+    // Reference: TT#3
+    // The static 'instance' property makes this a Singleton.
     static let instance = NotificationManager()
-
+    
+    // MARK: - Initialization
+    // The initializer can be made private to prevent creating other instances.
+    private init() {}
+    
+    
+    
+    // MARK: - Methods
+    // Reference: DD#9
     func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
@@ -20,7 +31,8 @@ class NotificationManager {
             }
         }
     }
-
+    
+    // Reference: DD#10
     func scheduleNotification(for reminder: Reminder) {
         guard reminder.isEnabled else { return }
 
@@ -36,7 +48,9 @@ class NotificationManager {
 
         UNUserNotificationCenter.current().add(request)
     }
-
+    
+    // removes a scheduled notification from the system's queue
+    // This is used when a user disables a reminder or deletes a habit.
     func unscheduleNotification(for reminder: Reminder) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [reminder.id.uuidString])
     }

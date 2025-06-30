@@ -23,16 +23,6 @@ struct EditHabitView: View {
     @State private var reminderEnabled: Bool
     @State private var reminderTime: Date
     
-    init(habit: Habit) {
-        self.habit = habit
-        self._habitName = State(initialValue: habit.name)
-        self._selectedIcon = State(initialValue: habit.iconName)
-        self._creationDate = State(initialValue: habit.creationDate)
-        
-        self._reminderEnabled = State(initialValue: habit.reminder?.isEnabled ?? false)
-        self._reminderTime = State(initialValue: habit.reminder?.time ?? .now)
-    }
-    
     private let iconColumns = [
         GridItem(.fixed(65)),
         GridItem(.fixed(65)),
@@ -44,6 +34,18 @@ struct EditHabitView: View {
         "star", "flame", "leaf", "drop", "bolt", "heart", "gift", "figure.walk",
         "book", "music.note", "moon", "sun.max", "cup.and.saucer", "laptopcomputer", "brain.head.profile"
     ]
+    
+    // MARK: Initialization
+    // Reference: DD#7
+    init(habit: Habit) {
+        self.habit = habit
+        self._habitName = State(initialValue: habit.name)
+        self._selectedIcon = State(initialValue: habit.iconName)
+        self._creationDate = State(initialValue: habit.creationDate)
+        
+        self._reminderEnabled = State(initialValue: habit.reminder?.isEnabled ?? false)
+        self._reminderTime = State(initialValue: habit.reminder?.time ?? .now)
+    }
     
     // MARK: Body
     var body: some View {
@@ -75,6 +77,13 @@ struct EditHabitView: View {
             
             Section("Reminders") {
                 Toggle("Enable Reminders", isOn: $reminderEnabled.animation())
+                    .onChange(of: reminderEnabled) { oldValue, newValue in
+                        // Only request permission when the toggle is turned ON
+                        if newValue == true {
+                            NotificationManager.instance.requestAuthorization()
+                        }
+                    }
+                
                 if reminderEnabled {
                     DatePicker("Reminder Time", selection: $reminderTime, displayedComponents: .hourAndMinute)
                 }

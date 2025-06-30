@@ -420,3 +420,133 @@
             ```
 
 ---
+
+### 9. `requestAuthorization()` Model Method
+
+  - **What it does**:
+    Prompts the user with a standard iOS system alert, asking for their permission to allow the app to send them notifications. This is a critical first step for any feature involving local or remote notifications.
+
+  - **Code**:
+    ```swift
+    func requestAuthorization() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if granted {
+                print("Notification permission granted.")
+            } else if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    ```
+
+  - **Breakdown**:
+    | Component | Description |
+    | :--- | :--- |
+    | `UNUserNotificationCenter.current()` | Retrieves the shared `UNUserNotificationCenter` object for the app. This object is the central point for managing all notification-related activities. |
+    | `.requestAuthorization(options:completionHandler:)` | This method initiates the permission request. It presents the system dialog to the user. This should always be called before scheduling any local notifications. |
+    | `options: [.alert, .sound, .badge]` | An array of `UNAuthorizationOptions` that specifies the types of notifications the app would like to send. You must request authorization for each type of interaction you plan to use. |
+    | `completionHandler: { granted, error in ... }` | An asynchronous block of code that is executed *after* the user responds to the permission prompt. <br> - `granted`: A `Bool` that is `true` if the user granted permission for at least one of the requested options, and `false` otherwise. <br> - `error`: An optional `Error` object that will contain a value if something went wrong with the authorization process itself. |
+
+- **Key Insights**:
+    - **One-Time Prompt**: The system only prompts the user the very first time this method is called. After the initial choice, subsequent calls will not show the dialog again and will instead use the user's stored preference.
+    - **Context is Key**: It's best practice to call this function in a context that helps the user understand *why* your app needs to send them notifications. For example, when they first interact with a feature that uses reminders.
+    - **Asynchronous Operation**: The `completionHandler` runs on a background thread, so you should be mindful of any UI updates you might want to perform, dispatching them back to the main thread if necessary.
+
+---
+
+### 10. `scheduleNotification(for:)` Model Method
+
+- **What it does**:
+    Schedules a local notification to be delivered daily at a specific time, based on the properties of a given `Reminder` object.
+- **Code**:
+    ```swift
+    func scheduleNotification(for reminder: Reminder) {
+        guard reminder.isEnabled else { return }
+
+        let content = UNMutableNotificationContent()
+        content.title = "Habit Reminder"
+        content.subtitle = reminder.getHabitName()
+        content.sound = .default
+
+        let dateComponents = DateUtils.calendar.dateComponents([.hour, .minute], from: reminder.time)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+
+        let request = UNNotificationRequest(identifier: reminder.id.uuidString, content: content, trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request)
+    }
+    ```
+
+- **Breakdown**:
+    | Component | Explanation |
+    | :--- | :--- |
+    | `guard reminder.isEnabled else { return }` | A safety check that immediately stops the function if the user has disabled reminders for this habit, preventing unwanted notifications from being scheduled. |
+    | `let content = UNMutableNotificationContent()` | Creates the payload of the notification—the actual content that the user will see and hear. |
+    | `content.title = "Habit Reminder"` | Sets the main, bolded title of the notification alert. |
+    | `content.subtitle = reminder.getHabitName()` | Sets the secondary text below the title, using the name of the habit for context. |
+    | `content.sound = .default` | Specifies that the default system notification sound should be played when the alert is delivered. |
+    | `let dateComponents = ...` | Extracts *only* the hour and minute from the `reminder.time`. By ignoring the day, month, and year, we can create a trigger that is time-based, not date-based. |
+    | `let trigger = UNCalendarNotificationTrigger(...)` | Defines *when* the notification should fire. Because `dateMatching` only contains an hour and a minute, and `repeats` is `true`, the system will trigger this notification every day when the clock matches that time. |
+    | `let request = UNNotificationRequest(...)` | Bundles the `content` (what to show) and the `trigger` (when to show it) into a single request. The `identifier` is set to the reminder's unique ID, which is crucial for being able to find and cancel this specific notification later. |
+    | `UNUserNotificationCenter.current().add(request)` | Submits the final request to the iOS system. The system now takes over and is responsible for delivering the notification at the scheduled time. |
+
+- **Key Insights**:
+    - **Prerequisites**: This function assumes that the user has already granted notification permissions via `requestAuthorization()`. If permission has not been granted, the system will silently discard the request.
+
+---
+
+### 11. `updateReminder(isEnabled:time:modelContext:)` Model Method
+
+- **What it does**:
+    Acts as the central controller for managing a habit's reminder. It handles the creation, updating, and deletion of a `Reminder` object and its corresponding scheduled notification based on user input.
+
+- **Code**:
+    ```swift
+    func updateReminder(isEnabled: Bool, time: Date, modelContext: ModelContext) {
+        if isEnabled {
+            if let reminder = self.reminder {
+                // Scenario: Update existing reminder
+                reminder.time = time
+                reminder.isEnabled = true
+                NotificationManager.instance.scheduleNotification(for: reminder)
+            } else {
+                // Scenario: Create new reminder
+                let newReminder = Reminder(isEnabled: true, time: time)
+                self.reminder = newReminder
+                NotificationManager.instance.scheduleNotification(for: newReminder)
+            }
+        } else {
+            // Scenario: Disable/delete reminder
+            if let reminder = self.reminder {
+                NotificationManager.instance.unscheduleNotification(for: reminder)
+                modelContext.delete(reminder)
+                self.reminder = nil
+            }
+        }
+    }
+    ```
+
+- **Parameters**:
+    - `isEnabled`: A `Bool` that determines whether the reminder should be active.
+    - `time`: A `Date` object representing the desired time for the notification to be delivered.
+    - `modelContext`: The `ModelContext` required to save or delete the `Reminder` object from the SwiftData database.
+
+- **Execution Flow**:
+    The function's logic is split into two main paths based on the `isEnabled` parameter.
+
+    -  **When `isEnabled` is `true` (Toggle is ON)**:
+        The function first checks if a reminder already exists for the habit.
+
+        - **If a reminder exists**: It updates the existing reminder's `time`. It then calls `NotificationManager.instance.scheduleNotification(for:)` to reschedule the notification with the new time. The `NotificationManager` automatically replaces the old pending notification because they share the same unique ID.
+        - **If no reminder exists**: It creates a new `Reminder` object, associates it with the current habit, and then calls `NotificationManager.instance.scheduleNotification(for:)` to schedule a brand new daily notification.
+
+    -  **When `isEnabled` is `false` (Toggle is OFF)**:
+        The function checks if there is an existing reminder to remove.
+
+        - If a reminder is found, it performs a three-step cleanup process:
+            1.  **Unschedule**: It calls `NotificationManager.instance.unscheduleNotification(for:)` to remove the pending notification from the system, preventing future alerts.
+            2.  **Delete**: It uses the `modelContext` to delete the `Reminder` object from the database.
+            3.  **De-associate**: It sets the habit's `reminder` property to `nil` to ensure the app's state is consistent.
+
+---
+

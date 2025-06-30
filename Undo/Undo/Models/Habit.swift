@@ -69,12 +69,12 @@ class Habit {
         return newLog
     }
     
+    // Reference: DD#11
     func updateReminder(isEnabled: Bool, time: Date, modelContext: ModelContext) {
         if isEnabled {
             if let reminder = self.reminder {
                 // If a reminder already exists, just update it.
                 reminder.time = time
-                reminder.isEnabled = true
                 NotificationManager.instance.scheduleNotification(for: reminder)
             } else {
                 // If no reminder exists, create a new one.

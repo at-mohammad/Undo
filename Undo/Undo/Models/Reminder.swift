@@ -10,16 +10,20 @@ import SwiftData
 
 @Model
 class Reminder {
+    // MARK: - Properties
     var id = UUID()
     var isEnabled: Bool
     var time: Date
     var habit: Habit?
 
-    init(isEnabled: Bool = true, time: Date = Date()) {
+    // MARK: - Initialization
+    init(isEnabled: Bool, time: Date) {
         self.isEnabled = isEnabled
         self.time = time
     }
     
+    // MARK: - Methods
+    // Ensuring a non-optional String is always returned before use
     func getHabitName() -> String {
         habit?.name ?? ""
     }

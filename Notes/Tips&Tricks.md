@@ -82,3 +82,44 @@
     | `@Bindable`    |  Referenc   | Observable class properties    | Through binding |
 
 ---
+
+### 3. The Singleton Design Pattern
+
+- **What it does**:
+    A design pattern that ensures a class has only one instance and provides a single, global point of access to that instance.
+
+- **How It Works**:
+    You create a `static` constant property within the class itself, which holds the single instance. This property is initialized only once, the first time it is accessed.
+
+- **Example (`NotificationManager.swift`)**:
+
+    ```swift
+    class NotificationManager {
+        // The static 'instance' property makes this a Singleton.
+        static let instance = NotificationManager()
+
+        // The initializer can be made private to prevent creating other instances.
+        private init() {}
+
+        func requestAuthorization() {
+            // ...
+        }
+    }
+
+    // You can now access the single instance from anywhere in the app:
+    NotificationManager.instance.requestAuthorization()
+    ```
+
+- **Why and When to Use It**:
+    Use a Singleton when you need exactly one object to coordinate actions across the system. It's particularly useful for managing shared resources or global state.
+
+    - **Shared Resources**: Ideal for managing access to a shared resource like a database connection, a network manager, or a manager for user settings. In the "Undo" app, it's used for the `NotificationManager` to handle all local notifications centrally.
+    - **Global Access**: Provides a convenient global access point, so you don't have to pass the instance around through multiple layers of your app.
+    - **Configuration**: Useful for objects that store configuration settings or manage the state for the entire application.
+
+- **Key Considerations**:
+
+    - **Overuse**: Singletons can be overused. If a class doesn't truly represent a unique, global resource, it might be better to manage its lifecycle in a more controlled way (e.g., through dependency injection).
+    - **Testing**: They can make unit testing more difficult because they introduce global state, making it hard to isolate components for testing.
+
+---
