@@ -46,9 +46,9 @@ struct HabitRowView: View {
             HStack(spacing: 12) {
                 Image(systemName: habit.iconName)
                     .symbolVariant(.fill)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(AppTheme.dynamicSecondary)
                     .frame(width: 32, height: 32)
-                    .background(.black)
+                    .background(AppTheme.dynamicPrimary)
                     .clipShape(Circle())
                 
                 Text(habit.name)
@@ -92,4 +92,5 @@ struct HabitRowView: View {
 // MARK: - Preview
 #Preview {
     HabitRowView(habit: Habit.sampleData[0], today: Date.now)
+        .preferredColorScheme(.dark)
 }

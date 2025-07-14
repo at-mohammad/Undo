@@ -35,7 +35,7 @@ struct HabitsSectionView: View {
                         HabitRowView(habit: habit, today: today)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 12)
-                            .background(.white) // To make white space tappable
+                            .background(AppTheme.dynamicSecondary) // To make white space tappable
                             .contextMenu {
                                 Button("Edit Habit", systemImage: "pencil", action: {editHabit(habit)})
                                 Button("Delete Habit", systemImage: "trash", action: {deleteHabit(habit)})
@@ -95,4 +95,5 @@ struct HabitsSectionView: View {
                 .datastoreLocation(.applicationDefault)
             ])
         }
+        .preferredColorScheme(.dark)
 }

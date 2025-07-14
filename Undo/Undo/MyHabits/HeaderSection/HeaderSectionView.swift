@@ -26,7 +26,7 @@ struct HeaderSectionView: View {
             ProgressCardView(completedCount: completedTodayCount, totalCount: habits.count)
                 .padding()
                 .frame(maxWidth: 370)
-                .background(.black)
+                .background(AppTheme.dynamicAccent)
                 .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
     }
@@ -39,4 +39,5 @@ struct HeaderSectionView: View {
 // MARK: - Preview
 #Preview {
     HeaderSectionView(habits: Habit.sampleData)
+        .preferredColorScheme(.dark)
 }

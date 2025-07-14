@@ -13,6 +13,15 @@ import SwiftUI
 struct ContentView: View {
     // Stores whether the onboarding has been completed. Persists across app launches.
     @AppStorage("isFirstTimeUserExperience") private var isFirstTimeUserExperience = true
+    @AppStorage("appearance") private var appearance: String = Appearance.system.rawValue
+    
+    private var currentScheme: ColorScheme? {
+        switch Appearance(rawValue: appearance) {
+        case .light: return .light
+        case .dark: return .dark
+        default: return nil
+        }
+    }
     
     var body: some View {
         // Reference: LL#4
@@ -24,8 +33,8 @@ struct ContentView: View {
                 AboutView()
             }
         }
-        .tint(.black)
-        .preferredColorScheme(.light)
+        .tint(AppTheme.dynamicPrimary)
+        .preferredColorScheme(currentScheme)
         // Like `.sheet`, but covers the entire screen.
         .fullScreenCover(isPresented: $isFirstTimeUserExperience) {
             OnboardingView(isFirstTimeUserExperience: $isFirstTimeUserExperience)

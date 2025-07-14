@@ -60,4 +60,5 @@ struct ProgressCardView: View {
 // MARK: - Preview
 #Preview {
     ProgressCardView(completedCount: 1, totalCount: 4)
+        .preferredColorScheme(.dark)
 }

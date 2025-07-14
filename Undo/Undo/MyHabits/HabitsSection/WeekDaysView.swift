@@ -57,4 +57,5 @@ struct WeekDaysView: View {
 #Preview {
     @Previewable @Environment(\.modelContext) var modelContext
     WeekDaysView(habit: Habit.sampleData[0], weekStartDate: Date.now, today: Date.now, modelContext: modelContext)
+        .preferredColorScheme(.dark)
 }

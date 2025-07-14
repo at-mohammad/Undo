@@ -36,18 +36,18 @@ struct DayCompletionView: View {
                 ZStack {
                     Circle() // Outer Circle
                         .strokeBorder( // Border styling
-                            isToday ? .black : .gray.opacity(0.3), // Color: black for today, light gray otherwise
+                            isToday ? AppTheme.dynamicPrimary : .gray.opacity(0.3), // Color: black for today, light gray otherwise
                             lineWidth: 2 // Border thickness
                         )
                         .background( // Fill color
                             Circle()
-                                .fill(isCompleted ? (isToday ? .black : .gray) : .clear) // Solid if completed, transparent otherwise
+                                .fill(isCompleted ? (isToday ? AppTheme.dynamicPrimary : .gray) : .clear) // Solid if completed, transparent otherwise
                         )
                         .frame(width: 42, height: 42) // Fixed size (original: 32)
                     
                     Text("\(dayNumber)") // Day of the month
                         .font(.system(size: 14, weight: .medium))
-                        .foregroundStyle(isCompleted ? .white : (isToday ? .black : .gray)) // Text/icon color
+                        .foregroundStyle(isCompleted ? AppTheme.dynamicSecondary : (isToday ? AppTheme.dynamicPrimary : .gray)) // Text/icon color
                 }
             }
             .buttonStyle(.plain) // Disable tapping all List row buttons at once
@@ -68,4 +68,5 @@ struct DayCompletionView: View {
 // MARK: - Preview
 #Preview {
     DayCompletionView(habit: Habit.sampleData[0], date: .now, today: .now, action: {})
+        .preferredColorScheme(.dark)
 }

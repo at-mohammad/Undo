@@ -25,11 +25,24 @@ struct AboutView: View {
     private let bmcURL = URL(string: "https://buymeacoffee.com/pixelarabi")!
     private let iconWindURL = URL(string: "https://www.flaticon.com/authors/icon-wind")!
     private let freePikURL = URL(string: "https://www.flaticon.com/authors/freepik")!
+    
+    @AppStorage("appearance") private var appearance: String = Appearance.system.rawValue
 
     // MARK: Body
     var body: some View {
         NavigationStack {
             List {
+                Section("Appearance") {
+                    // `Appearance.allCases`: Provided by the CaseIterable protocol.
+                    // `id: \.rawValue`: Uses the unique string raw value to identify each option.
+                    Picker("Appearance", selection: $appearance) {
+                        ForEach(Appearance.allCases, id: \.rawValue) { option in
+                            Text(option.rawValue.capitalized)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                
                 Section("Developer") {
                     NavigationLink("About Me") {
                         DeveloperDetailsView()
@@ -40,18 +53,22 @@ struct AboutView: View {
                 
                 Section("Resources") {
                     Link("Source Code on GitHub", destination: githubURL)
+                        .foregroundStyle(AppTheme.dynamicPrimary)
                 }
                 
                 Section("Support") {
-                    Link(destination: appReviewURL) {
-                        Label("Leave a Review", systemImage: "star.fill")
+                    Group {
+                        Link(destination: appReviewURL) {
+                            Label("Leave a Review", systemImage: "star.fill")
+                        }
+                        ShareLink(item: appShareURL) {
+                            Label("Share the App", systemImage: "square.and.arrow.up.fill")
+                        }
+                        Link(destination: URL(string: "mailto:\(feedbackEmail)?subject=Feedback%20for%20Undo%20App%20(v\(appVersion))")!) {
+                            Label("Send Feedback", systemImage: "envelope.fill")
+                        }
                     }
-                    ShareLink(item: appShareURL) {
-                        Label("Share the App", systemImage: "square.and.arrow.up.fill")
-                    }
-                    Link(destination: URL(string: "mailto:\(feedbackEmail)?subject=Feedback%20for%20Undo%20App%20(v\(appVersion))")!) {
-                        Label("Send Feedback", systemImage: "envelope.fill")
-                    }
+                    .foregroundStyle(AppTheme.dynamicPrimary)
                     
 //                    NavigationLink {
 //                        TipJarView()
@@ -67,6 +84,7 @@ struct AboutView: View {
                             AttributionView(work: "App Icon", author: "icon wind", url: iconWindURL)
                             AttributionView(work: "Social Media Icons", author: "Freepik", url: freePikURL)
                         }
+                        .foregroundStyle(AppTheme.dynamicPrimary)
                         .navigationTitle("Attributions")
                         .navigationBarTitleDisplayMode(.inline)
                     }
@@ -84,7 +102,6 @@ struct AboutView: View {
                         }
                         
                         SocialView(image: "bmc", url: bmcURL)
-                            .clipShape(Circle())
                     }
                 }
                 .font(.footnote)
@@ -95,7 +112,6 @@ struct AboutView: View {
                 
             }
             .navigationTitle("About Undo")
-            .foregroundStyle(.black)
         }
     }
 }
@@ -107,4 +123,5 @@ struct AboutView: View {
 // MARK: - Preview
 #Preview {
     AboutView()
+        .preferredColorScheme(.dark)
 }

@@ -18,10 +18,20 @@ struct SocialView: View {
     // MARK: Body
     var body: some View {
         Link(destination: url) {
-            Image(image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 32, height: 32)
+            ZStack {
+                Image(image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 32, height: 32)
+                    .background(.white)
+                    .clipShape(Circle())
+                
+                // Masks the icon's faint white edges that can appear in dark mode.
+                Circle()
+                    .stroke(lineWidth: 2)
+                    .foregroundStyle(.black)
+                    .frame(width: 31, height: 31)
+            }
         }
     }
 }
@@ -32,5 +42,6 @@ struct SocialView: View {
 
 // MARK: - Preview
 #Preview {
-    SocialView(image: "twitter", url: URL(string: "https://www.google.com")!)
+    SocialView(image: "instagram", url: URL(string: "https://www.google.com")!)
+        //.preferredColorScheme(.dark)
 }

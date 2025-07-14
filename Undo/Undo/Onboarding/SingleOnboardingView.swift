@@ -21,7 +21,7 @@ struct SingleOnboardingView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 150, height: 150)
-                .foregroundColor(.black)
+                .foregroundColor(AppTheme.dynamicPrimary)
                 .padding(.bottom, 30)
 
             Text(page.title)
@@ -30,7 +30,7 @@ struct SingleOnboardingView: View {
             Text(page.description)
                 .font(.body)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.black.opacity(0.55))
+                .foregroundColor(AppTheme.dynamicPrimary.opacity(0.55))
                 .padding(.horizontal, 30)
             
             Spacer()

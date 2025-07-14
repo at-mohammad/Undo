@@ -68,6 +68,7 @@ struct MyHabitsView: View {
                 ])
             }
             .modelContainer(container)
+            .preferredColorScheme(.dark)
     } catch {
         return Text("Failed to create container: \(error.localizedDescription)")
     }

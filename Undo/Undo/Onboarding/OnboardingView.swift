@@ -45,8 +45,8 @@ struct OnboardingView: View {
                     .fontWeight(.semibold)
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .padding()
-                    .foregroundColor(.white)
-                    .background(.black)
+                    .foregroundColor(AppTheme.dynamicSecondary)
+                    .background(AppTheme.dynamicPrimary)
                     .cornerRadius(10)
             }
             .padding(.horizontal, 40)
@@ -64,4 +64,5 @@ struct OnboardingView: View {
 // MARK: - Preview
 #Preview {
     OnboardingView(isFirstTimeUserExperience: .constant(true))
+        .preferredColorScheme(.dark)
 }

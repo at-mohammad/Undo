@@ -60,10 +60,10 @@ struct EditHabitView: View {
                     ForEach(iconOptions, id: \.self) { icon in
                         Image(systemName: icon)
                             .symbolVariant(.fill)
-                            .foregroundStyle(selectedIcon == icon ? .white : .black)
+                            .foregroundStyle(selectedIcon == icon ? AppTheme.dynamicSecondary : AppTheme.dynamicPrimary)
                             .font(.title2)
                             .padding(8)
-                            .background(selectedIcon == icon ? .black : .clear)
+                            .background(selectedIcon == icon ? AppTheme.dynamicPrimary : .clear)
                             .clipShape(Circle())
                             .onTapGesture { selectedIcon = icon }
                     }
@@ -77,6 +77,7 @@ struct EditHabitView: View {
             
             Section("Reminders") {
                 Toggle("Enable Reminders", isOn: $reminderEnabled.animation())
+                    .tint(.blue)
                     .onChange(of: reminderEnabled) { oldValue, newValue in
                         // Only request permission when the toggle is turned ON
                         if newValue == true {
@@ -131,4 +132,5 @@ struct EditHabitView: View {
 // MARK: - Preview
 #Preview {
     EditHabitView(habit: Habit.sampleData[0])
+        .preferredColorScheme(.dark)
 }
