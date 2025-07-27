@@ -2,7 +2,7 @@
 //  Appearance.swift
 //  Undo
 //
-//  Created by AbdelRahman Mohammad on 10/07/2025.
+//  Created by Pixel Arabi on 10/07/2025.
 //
 
 import Foundation
@@ -13,6 +13,17 @@ enum Appearance: String, CaseIterable {
     case system
     case light
     case dark
+    
+    var localizedName: String {
+        switch self {
+        case .system:
+            return String(localized: "System")
+        case .light:
+            return String(localized: "Light")
+        case .dark:
+            return String(localized: "Dark")
+        }
+    }
 }
 
 struct AppTheme {

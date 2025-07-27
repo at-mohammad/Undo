@@ -37,7 +37,7 @@ class NotificationManager {
         guard reminder.isEnabled else { return }
 
         let content = UNMutableNotificationContent()
-        content.title = "Habit Reminder"
+        content.title = String(localized: "Habit Reminder")
         content.subtitle = reminder.getHabitName()
         content.sound = .default
 

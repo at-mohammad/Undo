@@ -32,40 +32,40 @@ struct AboutView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("Appearance") {
+                Section(String(localized: "Appearance")) {
                     // `Appearance.allCases`: Provided by the CaseIterable protocol.
                     // `id: \.rawValue`: Uses the unique string raw value to identify each option.
-                    Picker("Appearance", selection: $appearance) {
+                    Picker(String(localized: "Appearance"), selection: $appearance) {
                         ForEach(Appearance.allCases, id: \.rawValue) { option in
-                            Text(option.rawValue.capitalized)
+                            Text(option.localizedName).tag(option.rawValue)
                         }
                     }
                     .pickerStyle(.segmented)
                 }
                 
-                Section("Developer") {
-                    NavigationLink("About Me") {
+                Section(String(localized: "Developer")) {
+                    NavigationLink(String(localized: "About Me")) {
                         DeveloperDetailsView()
-                            .navigationTitle("About Me")
+                            .navigationTitle(String(localized: "About Me"))
                             .navigationBarTitleDisplayMode(.inline)
                     }
                 }
                 
-                Section("Resources") {
-                    Link("Source Code on GitHub", destination: githubURL)
+                Section(String(localized: "Resources")) {
+                    Link(String(localized: "GitHub"), destination: githubURL)
                         .foregroundStyle(AppTheme.dynamicPrimary)
                 }
                 
-                Section("Support") {
+                Section(String(localized: "Support")) {
                     Group {
                         Link(destination: appReviewURL) {
-                            Label("Leave a Review", systemImage: "star.fill")
+                            Label(String(localized: "Review"), systemImage: "star.fill")
                         }
                         ShareLink(item: appShareURL) {
-                            Label("Share the App", systemImage: "square.and.arrow.up.fill")
+                            Label(String(localized: "Share"), systemImage: "square.and.arrow.up.fill")
                         }
                         Link(destination: URL(string: "mailto:\(feedbackEmail)?subject=Feedback%20for%20Undo%20App%20(v\(appVersion))")!) {
-                            Label("Send Feedback", systemImage: "envelope.fill")
+                            Label(String(localized: "Feedback"), systemImage: "envelope.fill")
                         }
                     }
                     .foregroundStyle(AppTheme.dynamicPrimary)
@@ -78,22 +78,28 @@ struct AboutView: View {
                     
                 }
                 
-                Section("Legal") {
-                    NavigationLink("Attributions") {
+                Section(String(localized: "Legal")) {
+                    NavigationLink(String(localized: "Attributions")) {
                         List {
-                            AttributionView(work: "App Icon", author: "icon wind", url: iconWindURL)
-                            AttributionView(work: "Social Media Icons", author: "Freepik", url: freePikURL)
+                            AttributionView(work: String(localized: "App Icon"), author: "icon wind", url: iconWindURL)
+                            AttributionView(work: String(localized: "Social Media Icons"), author: "Freepik", url: freePikURL)
                         }
                         .foregroundStyle(AppTheme.dynamicPrimary)
-                        .navigationTitle("Attributions")
+                        .navigationTitle(String(localized: "Attributions"))
                         .navigationBarTitleDisplayMode(.inline)
                     }
                 }
                 
                 Section {
                     VStack {
-                        Text("Version: \(appVersion)")
-                        Text("Created with love by Pixel Arabi")
+                        HStack(spacing: 4) {
+                            HStack(spacing: 0) {
+                                Text(String(localized: "Version"))
+                                Text(":")
+                            }
+                            Text(appVersion)
+                        }
+                        Text(String(localized: "Creator"))
                         HStack(spacing: 25) {
                             SocialView(image: "tiktok", url: tiktokURL)
                             SocialView(image: "youtube", url: youtubeURL)
@@ -111,7 +117,7 @@ struct AboutView: View {
                 .buttonStyle(.plain) // Disable tapping all socials buttons at once
                 
             }
-            .navigationTitle("About Undo")
+            .navigationTitle(String(localized: "About Undo"))
         }
     }
 }

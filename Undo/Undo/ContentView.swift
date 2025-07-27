@@ -26,10 +26,10 @@ struct ContentView: View {
     var body: some View {
         // Reference: LL#4
         TabView {
-            Tab("My Habits", systemImage: "list.star") {
+            Tab(String(localized: "My Habits"), systemImage: "list.star") {
                 MyHabitsView()
             }
-            Tab("About", systemImage: "info.circle") {
+            Tab(String(localized: "About"), systemImage: "info.circle") {
                 AboutView()
             }
         }

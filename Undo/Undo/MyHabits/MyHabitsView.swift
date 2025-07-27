@@ -27,10 +27,10 @@ struct MyHabitsView: View {
                 HeaderSectionView(habits: habits)
                 HabitsSectionView(habits: habits, path: $path)
             }
-            .navigationTitle("My Habits")
+            .navigationTitle(String(localized: "My Habits"))
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {
-                    Button("Add Habit", systemImage: "plus") {
+                    Button(String(localized: "Add Habit"), systemImage: "plus") {
                         let habit = Habit()
                         path = [habit]
                         addHabitTip.invalidate(reason: .actionPerformed) // Stop showing the tip again.

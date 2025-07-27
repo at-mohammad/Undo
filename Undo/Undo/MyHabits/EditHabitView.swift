@@ -50,12 +50,12 @@ struct EditHabitView: View {
     // MARK: Body
     var body: some View {
         Form {
-            Section("Habit Name") {
-                TextField("e.g., Drink Water", text: $habitName)
+            Section(String(localized: "Habit Name")) {
+                TextField(String(localized: "Habit Name Example"), text: $habitName)
                     .submitLabel(.done)
             }
             
-            Section("Choose Icon") {
+            Section(String(localized: "Choose Icon")) {
                 LazyVGrid(columns: iconColumns, spacing: 16) {
                     ForEach(iconOptions, id: \.self) { icon in
                         Image(systemName: icon)
@@ -71,12 +71,12 @@ struct EditHabitView: View {
                 .padding(.vertical, 8)
             }
             
-            Section("Start Date") {
-                DatePicker("First day of your habit", selection: $creationDate, in: ...Date.now, displayedComponents: .date)
+            Section(String(localized: "Start Date")) {
+                DatePicker(String(localized: "Habit First Day"), selection: $creationDate, in: ...Date.now, displayedComponents: .date)
             }
             
-            Section("Reminders") {
-                Toggle("Enable Reminders", isOn: $reminderEnabled.animation())
+            Section(String(localized: "Reminders")) {
+                Toggle(String(localized: "Enable Reminders"), isOn: $reminderEnabled.animation())
                     .tint(.blue)
                     .onChange(of: reminderEnabled) { oldValue, newValue in
                         // Only request permission when the toggle is turned ON
@@ -86,15 +86,15 @@ struct EditHabitView: View {
                     }
                 
                 if reminderEnabled {
-                    DatePicker("Reminder Time", selection: $reminderTime, displayedComponents: .hourAndMinute)
+                    DatePicker(String(localized: "Reminder Time"), selection: $reminderTime, displayedComponents: .hourAndMinute)
                 }
             }
         }
-        .navigationTitle("Habit Details")
+        .navigationTitle(String(localized: "Habit Details"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
-                Button("Save") {
+                Button(String(localized: "Save")) {
                     saveHabit()
                 }
                 .disabled(habitName.trimmingCharacters(in: .whitespaces).isEmpty)

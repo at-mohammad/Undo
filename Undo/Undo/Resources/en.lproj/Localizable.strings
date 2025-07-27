@@ -1,0 +1,96 @@
+/* 
+  Localizable.strings
+  Undo
+
+  Created by Pixel Arabi on 27/07/2025.
+  
+*/
+
+// MARK: - General & Common
+"Completed" = "completed";
+"Save" = "Save";
+"Next" = "Next";
+"Get Started" = "Get Started";
+"Made By" = "made by";
+"Version" = "Version";
+
+// MARK: - Tabs
+"My Habits" = "My Habits";
+"About" = "About";
+
+// MARK: - My Habits View
+"Add Habit" = "Add Habit";
+"No Habits" = "No Habits";
+"Empty Page Description 1" = "Tap the";
+"Empty Page Description 2" = "sign to add your first habit!";
+
+// MARK: - Progress Encouragement
+"Progress 100%" = "Well done! 🎉";
+"Progress 75%" = "Just a bit more!";
+"Progress 50%" = "Almost there!";
+"Progress 25%" = "Keep it up!";
+"Progress 0%" = "Let's get started!";
+
+// MARK: - Habit Context Menu
+"Edit Habit" = "Edit Habit";
+"Delete Habit" = "Delete Habit";
+"Reset Progress" = "Reset Progress";
+
+// MARK: - Edit Habit View
+"Habit Details" = "Habit Details";
+"Habit Name" = "Habit Name";
+"Habit Name Example" = "e.g., Drink Water";
+"Choose Icon" = "Choose Icon";
+"Start Date" = "Start Date";
+"Habit First Day" = "First day of your habit";
+"Reminders" = "Reminders";
+"Enable Reminders" = "Enable Reminders";
+"Reminder Time" = "Reminder Time";
+"Habit Reminder" = "Habit Reminder";
+
+// MARK: - About View
+"About Undo" = "About Undo";
+"Creator" = "Created with love by Pixel Arabi";
+
+// MARK: - About View - Appearance
+"Appearance" = "Appearance";
+"System" = "System";
+"Light" = "Light";
+"Dark" = "Dark";
+
+// MARK: - About View - Developer
+"Developer" = "Developer";
+"About Me" = "About Me";
+"Developer Bio" = "I created 'undo' because I believe that changing your habits starts with a single, simple step. This app is the tool I wished I had, a minimalist way to track progress and stay motivated. I hope it helps you on your journey as much as it has helped me on mine.";
+
+// MARK: - About View - Resources
+"Resources" = "Resources";
+"GitHub" = "Source Code on GitHub";
+
+// MARK: - About View - Support
+"Support" = "Support";
+"Review" = "Leave a Review";
+"Share" = "Share the App";
+"Feedback" = "Send Feedback";
+
+// MARK: - About View - Legal
+"Legal" = "Legal";
+"Attributions" = "Attributions";
+"App Icon" = "App Icon";
+"Social Media Icons" = "Social Media Icons";
+
+// MARK: - Onboarding
+"Onboarding Page Title 1" = "Welcome to Undo!";
+"Onboarding Page Description 1" = "Start changing your habits and track your progress effortlessly.";
+"Onboarding Page Title 2" = "Add & Customize";
+"Onboarding Page Description 2" = "Easily create new habits and personalize them with a variety of icons.";
+"Onboarding Page Title 3" = "Visualize Your Journey";
+"Onboarding Page Description 3" = "See your daily and weekly progress at a glance to stay motivated.";
+"Onboarding Page Title 4" = "Ready to Begin?";
+"Onboarding Page Description 4" = "Tap 'Get Started' to take the first step towards a more productive you.";
+
+// MARK: - Tips
+"Add Habit Tip Title" = "Add Your First Habit";
+"Add Habit Tip Message" = "Tap the plus button to create a new habit.";
+"Habit Menu Tip Title" = "Manage Your Habit";
+"Habit Menu Tip Message" = "Long-press on a habit to see more options.";

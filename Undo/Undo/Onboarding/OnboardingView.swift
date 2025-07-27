@@ -41,7 +41,7 @@ struct OnboardingView: View {
                     isFirstTimeUserExperience = false
                 }
             } label: {
-                Text(currentPageIndex < pages.count - 1 ? "Next": "Get Started")
+                Text(currentPageIndex < pages.count - 1 ? String(localized: "Next"): String(localized: "Get Started"))
                     .fontWeight(.semibold)
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .padding()

@@ -23,11 +23,11 @@ struct ProgressCardView: View {
     
     private var encouragementText: String {
         switch progress {
-        case 1.0: return "Well done! 🎉"
-        case 0.75...: return "Just a bit more!"
-        case 0.50...: return "Almost there!"
-        case 0.01...: return "Keep it up!"
-        default: return "Let's get started!"
+        case 1.0: return String(localized: "Progress 100%")
+        case 0.75...: return String(localized: "Progress 75%")
+        case 0.50...: return String(localized: "Progress 50%")
+        case 0.01...: return String(localized: "Progress 25%")
+        default: return String(localized: "Progress 0%")
         }
     }
     
@@ -39,9 +39,14 @@ struct ProgressCardView: View {
                     .font(.headline)
                     .foregroundStyle(.white)
                 
-                Text("\(completedCount)/\(totalCount) completed")
-                    .font(.subheadline)
-                    .foregroundStyle(.white.opacity(0.8))
+                HStack(spacing: 4) {
+                    Text("\(completedCount)")
+                    Text("/")
+                    Text("\(totalCount)")
+                    Text(String(localized: "Completed"))
+                }
+                .font(.subheadline)
+                .foregroundStyle(.white.opacity(0.8))
             }
             .frame(width: 150)
             

@@ -10,22 +10,22 @@ import TipKit
 
 struct AddHabitTip: Tip {
     var title: Text {
-        Text("Add Your First Habit")
+        Text(String(localized: "Add Habit Tip Title"))
     }
 
     var message: Text? {
-        Text("Tap the plus button to create a new habit.")
+        Text(String(localized: "Add Habit Tip Message"))
             .foregroundStyle(.gray)
     }
 }
 
 struct HabitContextMenuTip: Tip {
     var title: Text {
-        Text("Manage Your Habit")
+        Text(String(localized: "Habit Menu Tip Title"))
     }
     
     var message: Text? {
-        Text("Long-press on a habit to see more options.")
+        Text(String(localized: "Habit Menu Tip Message"))
             .foregroundStyle(.gray)
     }
     

@@ -28,9 +28,12 @@ struct CircularProgressView: View {
                 .rotationEffect(.degrees(-90)) // Rotate to start at top (12 o'clock), original start point is at right (3 o'clock).
                 .animation(.easeInOut, value: progress)
             
-            Text("\(Int(progress * 100))%")
-                .font(.subheadline.bold())
-                .foregroundStyle(.white)
+            HStack(spacing: 0) {
+                Text("\(Int(progress * 100))")
+                Text("%")
+            }
+            .font(.subheadline.bold())
+            .foregroundStyle(.white)
         }
     }
 }

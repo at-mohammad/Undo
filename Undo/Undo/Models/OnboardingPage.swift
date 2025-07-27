@@ -11,17 +11,17 @@ struct OnboardingPage {
     // MARK: - Static Properties
     static var samplePages: [OnboardingPage] = [
         OnboardingPage(imageName: "figure.walk.circle.fill",
-                       title: "Welcome to Undo!",
-                       description: "Start changing your habits and track your progress effortlessly."),
+                       title: String(localized: "Onboarding Page Title 1"),
+                       description: String(localized: "Onboarding Page Description 1")),
         OnboardingPage(imageName: "plus.circle.fill",
-                       title: "Add & Customize",
-                       description: "Easily create new habits and personalize them with a variety of icons."),
+                       title: String(localized: "Onboarding Page Title 2"),
+                       description: String(localized: "Onboarding Page Description 2")),
         OnboardingPage(imageName: "chart.bar.xaxis",
-                       title: "Visualize Your Journey",
-                       description: "See your daily and weekly progress at a glance to stay motivated."),
+                       title: String(localized: "Onboarding Page Title 3"),
+                       description: String(localized: "Onboarding Page Description 3")),
         OnboardingPage(imageName: "checkmark.seal.fill",
-                       title: "Ready to Begin?",
-                       description: "Tap 'Get Started' to take the first step towards a more productive you.")
+                       title: String(localized: "Onboarding Page Title 4"),
+                       description: String(localized: "Onboarding Page Description 4"))
     ]
     
     // MARK: - Properties

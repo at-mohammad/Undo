@@ -19,10 +19,10 @@ struct AttributionView: View {
     // MARK: Body
     var body: some View {
         HStack {
-            Text(work + " made by")
             Link(destination: url) {
-                Text(author)
-                    .bold()
+                // To apply different styling to parts of a single line of text, we combine multiple `Text` views using the `+` operator.
+                // This allows us to apply the `.bold()` modifier only to the author's name,while the rest of the text remains in the default style.
+                (Text(work + " \(String(localized: "Made By")) ") + Text(author).bold())
             }
         }
     }

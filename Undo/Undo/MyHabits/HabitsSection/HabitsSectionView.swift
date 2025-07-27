@@ -37,9 +37,9 @@ struct HabitsSectionView: View {
                             .padding(.vertical, 12)
                             .background(AppTheme.dynamicSecondary) // To make white space tappable
                             .contextMenu {
-                                Button("Edit Habit", systemImage: "pencil", action: {editHabit(habit)})
-                                Button("Delete Habit", systemImage: "trash", action: {deleteHabit(habit)})
-                                Button("Reset Progress", systemImage: "arrow.counterclockwise", action: {resetProgress(habit)})
+                                Button(String(localized: "Edit Habit"), systemImage: "pencil", action: {editHabit(habit)})
+                                Button(String(localized: "Delete Habit"), systemImage: "trash", action: {deleteHabit(habit)})
+                                Button(String(localized: "Reset Progress"), systemImage: "arrow.counterclockwise", action: {resetProgress(habit)})
                             }
                     }
                 }
@@ -54,9 +54,13 @@ struct HabitsSectionView: View {
     // MARK: Subviews
     private var emptyStateView: some View {
         ContentUnavailableView {
-            Text("No Habits")
+            Text(String(localized: "No Habits"))
         } description: {
-            Text("Tap the \(Image(systemName: "plus")) sign to add your first habit!")
+            HStack(spacing: 4) {
+                Text(String(localized: "Empty Page Description 1"))
+                Image(systemName: "plus")
+                Text(String(localized: "Empty Page Description 2"))
+            }
         }
     }
     
