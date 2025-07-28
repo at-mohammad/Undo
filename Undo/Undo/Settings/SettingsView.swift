@@ -8,33 +8,38 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("appearance") private var appearance: String = Appearance.system.rawValue
+    
     var body: some View {
-//        NavigationStack {
-//            List {
-//                Section("Appearance") {
-//                    Text("Dark Mode")
-//                    //Text("App Icon")
-//                }
-//                
-//                Section("Resources") {
-//                    Text("Github")
-//                }
-//                
-//                Section("Support") {
-//                    Text("Leave a Review")
-//                    Text("Share the App")
-//                    Text("Send Feedback")
-//                    Text("Tip Jar")
-//                }
-//                
-//                Section("Info") {
-//                    NavigationLink("About the app") {
-//                        AboutView()
-//                    }
-//                }
-//            }
-//            .navigationTitle("Settings")
-//        }
+        NavigationStack {
+            List {
+                Section("Appearance") {
+                    Picker(String(localized: "Appearance"), selection: $appearance) {
+                        ForEach(Appearance.allCases, id: \.rawValue) { option in
+                            Text(option.localizedName).tag(option.rawValue)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                
+                Section("Language") {
+                    Button {
+                        // Opens the app's settings in the iOS Settings app
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url)
+                        }
+                    } label: {
+                        HStack {
+                            Text(String(localized: "Change Language"))
+                            Spacer()
+                            Image(systemName: "chevron.forward")
+                                .font(.caption.bold())
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

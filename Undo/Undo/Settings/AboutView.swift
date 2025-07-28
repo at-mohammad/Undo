@@ -25,44 +25,16 @@ struct AboutView: View {
     private let bmcURL = URL(string: "https://buymeacoffee.com/pixelarabi")!
     private let iconWindURL = URL(string: "https://www.flaticon.com/authors/icon-wind")!
     private let freePikURL = URL(string: "https://www.flaticon.com/authors/freepik")!
-    
-    @AppStorage("appearance") private var appearance: String = Appearance.system.rawValue
 
     // MARK: Body
     var body: some View {
         NavigationStack {
             List {
-                Section(String(localized: "Settings")) {
-                    HStack {
-                        Text(String(localized: "Appearance") + ":")
-                        
-                        // `Appearance.allCases`: Provided by the CaseIterable protocol.
-                        // `id: \.rawValue`: Uses the unique string raw value to identify each option.
-                        Picker(String(localized: "Appearance"), selection: $appearance) {
-                            ForEach(Appearance.allCases, id: \.rawValue) { option in
-                                Text(option.localizedName).tag(option.rawValue)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                    }
-                    
-                    HStack {
-                        Text(String(localized: "Language") + ":")
-                        
-                        Button {
-                            // Opens the app's settings in the iOS Settings app
-                            if let url = URL(string: UIApplication.openSettingsURLString) {
-                                UIApplication.shared.open(url)
-                            }
-                        } label: {
-                            HStack {
-                                Text(String(localized: "Change Language"))
-                                Spacer()
-                                Image(systemName: "chevron.forward")
-                                    .font(.caption.weight(.bold))
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
+                Section(String(localized: "Preferences")) {
+                    NavigationLink(String(localized: "Settings")) {
+                        SettingsView()
+                            .navigationTitle(String(localized: "Settings"))
+                            .navigationBarTitleDisplayMode(.inline)
                     }
                 }
                 
