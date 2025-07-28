@@ -32,15 +32,38 @@ struct AboutView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section(String(localized: "Appearance")) {
-                    // `Appearance.allCases`: Provided by the CaseIterable protocol.
-                    // `id: \.rawValue`: Uses the unique string raw value to identify each option.
-                    Picker(String(localized: "Appearance"), selection: $appearance) {
-                        ForEach(Appearance.allCases, id: \.rawValue) { option in
-                            Text(option.localizedName).tag(option.rawValue)
+                Section(String(localized: "Settings")) {
+                    HStack {
+                        Text(String(localized: "Appearance") + ":")
+                        
+                        // `Appearance.allCases`: Provided by the CaseIterable protocol.
+                        // `id: \.rawValue`: Uses the unique string raw value to identify each option.
+                        Picker(String(localized: "Appearance"), selection: $appearance) {
+                            ForEach(Appearance.allCases, id: \.rawValue) { option in
+                                Text(option.localizedName).tag(option.rawValue)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                    
+                    HStack {
+                        Text(String(localized: "Language") + ":")
+                        
+                        Button {
+                            // Opens the app's settings in the iOS Settings app
+                            if let url = URL(string: UIApplication.openSettingsURLString) {
+                                UIApplication.shared.open(url)
+                            }
+                        } label: {
+                            HStack {
+                                Text(String(localized: "Change Language"))
+                                Spacer()
+                                Image(systemName: "chevron.forward")
+                                    .font(.caption.weight(.bold))
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                     }
-                    .pickerStyle(.segmented)
                 }
                 
                 Section(String(localized: "Developer")) {
@@ -93,10 +116,7 @@ struct AboutView: View {
                 Section {
                     VStack {
                         HStack(spacing: 4) {
-                            HStack(spacing: 0) {
-                                Text(String(localized: "Version"))
-                                Text(":")
-                            }
+                            Text(String(localized: "Version") + ":")
                             Text(appVersion)
                         }
                         Text(String(localized: "Creator"))
