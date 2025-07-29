@@ -7,9 +7,14 @@
 
 import SwiftUI
 
+
+
+// MARK: - Settings View
 struct SettingsView: View {
+    // MARK: Properties
     @AppStorage("appearance") private var appearance: String = Appearance.system.rawValue
     
+    // MARK: Body
     var body: some View {
         NavigationStack {
             List {
@@ -43,6 +48,11 @@ struct SettingsView: View {
     }
 }
 
+
+
+
+
+// MARK: - Preview
 #Preview {
     SettingsView()
 }

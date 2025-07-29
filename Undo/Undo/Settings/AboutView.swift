@@ -14,10 +14,7 @@ struct AboutView: View {
     // MARK: Properties
     private let appVersion = AppInfo.version
     private let buildNumber = AppInfo.buildNumber
-    private let feedbackEmail = "pixelarabiofficial@gmail.com"
     private let githubURL = URL(string: "https://github.com/PixelArabi/Undo.git")!
-    private let appReviewURL = URL(string: "https://apps.apple.com/app/id6747099055?action=write-review")!
-    private let appShareURL = URL(string: "https://apps.apple.com/app/id6747099055")!
     private let tiktokURL = URL(string: "https://www.tiktok.com/@pixelarabi")!
     private let youtubeURL = URL(string: "https://www.youtube.com/@pixelarabi")!
     private let instagramURL = URL(string: "https://www.instagram.com/pixelarabi")!
@@ -52,25 +49,11 @@ struct AboutView: View {
                 }
                 
                 Section(String(localized: "Support")) {
-                    Group {
-                        Link(destination: appReviewURL) {
-                            Label(String(localized: "Review"), systemImage: "star.fill")
-                        }
-                        ShareLink(item: appShareURL) {
-                            Label(String(localized: "Share"), systemImage: "square.and.arrow.up.fill")
-                        }
-                        Link(destination: URL(string: "mailto:\(feedbackEmail)?subject=Feedback%20for%20Undo%20App%20(v\(appVersion))")!) {
-                            Label(String(localized: "Feedback"), systemImage: "envelope.fill")
-                        }
+                    NavigationLink(String(localized: "Help & Feedback")) {
+                        SupportView()
+                            .navigationTitle(String(localized: "Help & Feedback"))
+                            .navigationBarTitleDisplayMode(.inline)
                     }
-                    .foregroundStyle(AppTheme.dynamicPrimary)
-                    
-//                    NavigationLink {
-//                        TipJarView()
-//                    } label: {
-//                        Label("Support with a Tip", systemImage: "heart.fill")
-//                    }
-                    
                 }
                 
                 Section(String(localized: "Legal")) {
