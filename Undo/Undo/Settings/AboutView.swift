@@ -75,14 +75,14 @@ struct AboutView: View {
                             Text(appVersion)
                         }
                         Text(String(localized: "Creator"))
-                        HStack(spacing: 25) {
-                            SocialView(image: "tiktok", url: tiktokURL)
-                            SocialView(image: "youtube", url: youtubeURL)
-                            SocialView(image: "instagram", url: instagramURL)
+                        HStack(spacing: 30) {
+                            //SocialView(image: "tiktok", url: tiktokURL)
+                            //SocialView(image: "youtube", url: youtubeURL)
                             SocialView(image: "twitter", url: xURL)
+                            SocialView(image: "instagram", url: instagramURL)
+                            SocialView(image: "bmc", url: bmcURL)
                         }
-                        
-                        SocialView(image: "bmc", url: bmcURL)
+                        .environment(\.layoutDirection, .leftToRight) // Forces a left-to-right layout, regardless of the device's language.
                     }
                 }
                 .font(.footnote)
