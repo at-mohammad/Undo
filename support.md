@@ -18,7 +18,7 @@ A: Yes. Long-press on any habit on the "My Habits" screen to bring up a context 
 
 The best way to report a bug or request a new feature is by creating an "Issue" on the GitHub repository. This helps me track all feedback in one place.
 
-* **[Click Here to Report a Bug or Request a Feature](https://github.com/PixelArabi/Undo/issues)**
+* **[Click Here to Report a Bug or Request a Feature](https://github.com/at-mohammad/Undo/issues)**
 
 ---
 
@@ -26,12 +26,9 @@ The best way to report a bug or request a new feature is by creating an "Issue" 
 
 For general questions, you can connect with me on social media or by email. If you find the app helpful and would like to support its development, you can buy me a coffee!
 
-* **Email:** [pixelarabiofficial@gmail.com](mailto:pixelarabiofficial@gmail.com)
-* **TikTok:** [@pixelarabi](https://www.tiktok.com/@pixelarabi)
-* **YouTube:** [@pixelarabi](https://www.youtube.com/@pixelarabi)
-* **Instagram:** [@pixelarabi](https://www.instagram.com/pixelarabi)
-* **X (Twitter):** [@pixelarabi_](https://x.com/pixelarabi_)
+* **Email:** [atmohammad97@gmail.com](mailto:atmohammad97@gmail.com)
+* **X (Twitter):** [@ATMohammad_](https://x.com/ATMohammad_)
 
-* **[Buy Me a Coffee ☕️](https://buymeacoffee.com/pixelarabi)**
+* **[Buy Me a Coffee ☕️](https://buymeacoffee.com/amohammad)**
 
 Thank you for using Undo!
