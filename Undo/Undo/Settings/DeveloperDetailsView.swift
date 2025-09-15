@@ -2,7 +2,7 @@
 //  DeveloperDetailsView.swift
 //  Undo
 //
-//  Created by Pixel Arabi on 04/06/2025.
+//  Created by AbdelRahman Mohammad on 04/06/2025.
 //
 
 import SwiftUI
@@ -20,7 +20,7 @@ struct DeveloperDetailsView: View {
     var body: some View {
         List {
             VStack(alignment: .center) {
-                Image("PixelArabi")
+                Image("AMLogo")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 128, height: 128)

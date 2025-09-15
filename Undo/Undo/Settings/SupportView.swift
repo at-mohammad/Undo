@@ -2,7 +2,7 @@
 //  SupportView.swift
 //  Undo
 //
-//  Created by Pixel Arabi on 29/07/2025.
+//  Created by AbdelRahman Mohammad on 29/07/2025.
 //
 
 import SwiftUI
@@ -14,7 +14,7 @@ struct SupportView: View {
     // MARK: Properties
     private let appVersion = AppInfo.version
     private let buildNumber = AppInfo.buildNumber
-    private let feedbackEmail = "pixelarabiofficial@gmail.com"
+    private let feedbackEmail = "atmohammad97@gmail.com"
     private let appReviewURL = URL(string: "https://apps.apple.com/app/id6747099055?action=write-review")!
     private let appShareURL = URL(string: "https://apps.apple.com/app/id6747099055")!
     

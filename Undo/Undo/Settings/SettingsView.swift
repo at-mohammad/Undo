@@ -2,7 +2,7 @@
 //  SettingsView.swift
 //  Undo
 //
-//  Created by Pixel Arabi on 28/05/2025.
+//  Created by AbdelRahman Mohammad on 28/05/2025.
 //
 
 import SwiftUI

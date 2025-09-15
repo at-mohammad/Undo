@@ -2,7 +2,7 @@
 //  Appearance.swift
 //  Undo
 //
-//  Created by Pixel Arabi on 10/07/2025.
+//  Created by AbdelRahman Mohammad on 10/07/2025.
 //
 
 import Foundation

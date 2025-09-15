@@ -2,7 +2,7 @@
 //  AboutView.swift
 //  Undo
 //
-//  Created by Pixel Arabi on 29/05/2025.
+//  Created by AbdelRahman Mohammad on 29/05/2025.
 //
 
 import SwiftUI
@@ -14,12 +14,12 @@ struct AboutView: View {
     // MARK: Properties
     private let appVersion = AppInfo.version
     private let buildNumber = AppInfo.buildNumber
-    private let githubURL = URL(string: "https://github.com/PixelArabi/Undo.git")!
+    private let githubURL = URL(string: "https://github.com/at-mohammad/Undo.git")!
     private let tiktokURL = URL(string: "https://www.tiktok.com/@pixelarabi")!
     private let youtubeURL = URL(string: "https://www.youtube.com/@pixelarabi")!
     private let instagramURL = URL(string: "https://www.instagram.com/pixelarabi")!
-    private let xURL = URL(string: "https://x.com/pixelarabi_")!
-    private let bmcURL = URL(string: "https://buymeacoffee.com/pixelarabi")!
+    private let xURL = URL(string: "https://x.com/ATMohammad_")!
+    private let bmcURL = URL(string: "https://buymeacoffee.com/amohammad")!
     private let iconWindURL = URL(string: "https://www.flaticon.com/authors/icon-wind")!
     private let freePikURL = URL(string: "https://www.flaticon.com/authors/freepik")!
 
@@ -78,8 +78,8 @@ struct AboutView: View {
                         HStack(spacing: 30) {
                             //SocialView(image: "tiktok", url: tiktokURL)
                             //SocialView(image: "youtube", url: youtubeURL)
+                            //SocialView(image: "instagram", url: instagramURL)
                             SocialView(image: "twitter", url: xURL)
-                            SocialView(image: "instagram", url: instagramURL)
                             SocialView(image: "bmc", url: bmcURL)
                         }
                         .environment(\.layoutDirection, .leftToRight) // Forces a left-to-right layout, regardless of the device's language.

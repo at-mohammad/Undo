@@ -2,7 +2,7 @@
   Localizable.strings
   Undo
 
-  Created by Pixel Arabi on 27/07/2025.
+  Created by AbdelRahman Mohammad on 27/07/2025.
   
 */
 
@@ -52,7 +52,7 @@
 "About Undo" = "About Undo";
 "Preferences" = "Preferences";
 "Settings" = "Settings";
-"Creator" = "Created with love by Pixel Arabi";
+"Creator" = "Created with love by AM";
 
 // MARK: - About View - Appearance
 "Appearance" = "Appearance";

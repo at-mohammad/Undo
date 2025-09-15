@@ -2,7 +2,7 @@
 //  TipJarView.swift
 //  Undo
 //
-//  Created by Pixel Arabi on 04/06/2025.
+//  Created by AbdelRahman Mohammad on 04/06/2025.
 //
 
 import SwiftUI
