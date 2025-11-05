@@ -26,9 +26,20 @@ enum Appearance: String, CaseIterable {
     }
 }
 
+private enum AppThemeColor {
+    static func color(named name: String) -> Color {
+        guard let uiColor = UIColor(named: name) else {
+            assertionFailure("Missing expected color asset named \(name)")
+            return Color.accentColor
+        }
+
+        return Color(uiColor)
+    }
+}
+
 struct AppTheme {
-    static let dynamicPrimary = Color(UIColor(named: "DynamicPrimary")!)
-    static let dynamicSecondary = Color(UIColor(named: "DynamicSecondary")!)
-    static let dynamicAccent = Color(UIColor(named: "DynamicAccent")!)
-    static let dynamicTint = Color(UIColor(named: "DynamicTint")!)
+    static let dynamicPrimary = AppThemeColor.color(named: "DynamicPrimary")
+    static let dynamicSecondary = AppThemeColor.color(named: "DynamicSecondary")
+    static let dynamicAccent = AppThemeColor.color(named: "DynamicAccent")
+    static let dynamicTint = AppThemeColor.color(named: "DynamicTint")
 }

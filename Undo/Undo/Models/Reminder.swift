@@ -17,9 +17,10 @@ class Reminder {
     var habit: Habit?
 
     // MARK: - Initialization
-    init(isEnabled: Bool, time: Date) {
+    init(isEnabled: Bool, time: Date, habit: Habit? = nil) {
         self.isEnabled = isEnabled
         self.time = time
+        self.habit = habit
     }
     
     // MARK: - Methods

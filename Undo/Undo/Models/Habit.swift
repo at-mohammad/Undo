@@ -73,22 +73,27 @@ class Habit {
     func updateReminder(isEnabled: Bool, time: Date, modelContext: ModelContext) {
         if isEnabled {
             if let reminder = self.reminder {
-                // If a reminder already exists, just update it.
-                reminder.time = time
+                // If a reminder already exists, refresh it with the new values.
+                reminder.isEnabled = true
+                if reminder.time != time {
+                    reminder.time = time
+                }
+
+                NotificationManager.instance.unscheduleNotification(for: reminder)
                 NotificationManager.instance.scheduleNotification(for: reminder)
             } else {
-                // If no reminder exists, create a new one.
-                let newReminder = Reminder(isEnabled: true, time: time)
+                // If no reminder exists, create a new one and persist it.
+                let newReminder = Reminder(isEnabled: true, time: time, habit: self)
+                modelContext.insert(newReminder)
                 self.reminder = newReminder
                 NotificationManager.instance.scheduleNotification(for: newReminder)
             }
-        } else {
-            // If the toggle is turned off, delete the existing reminder.
-            if let reminder = self.reminder {
-                NotificationManager.instance.unscheduleNotification(for: reminder)
-                modelContext.delete(reminder)
-                self.reminder = nil
-            }
+        } else if let reminder = self.reminder {
+            // If the toggle is turned off, remove the existing reminder.
+            NotificationManager.instance.unscheduleNotification(for: reminder)
+            reminder.isEnabled = false
+            modelContext.delete(reminder)
+            self.reminder = nil
         }
     }
 }
