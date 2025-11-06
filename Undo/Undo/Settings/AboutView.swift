@@ -93,8 +93,6 @@ struct AboutView: View {
                 
             }
             .navigationTitle(String(localized: "About Undo"))
-            // This is a required alternative since the .large mode is broken for now in ios 26
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
