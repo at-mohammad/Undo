@@ -45,7 +45,23 @@ struct HabitsSectionView: View {
                 }
                 .scrollTargetLayout()
             }
-            .padding(.bottom, 40) // Prevents the TabView from covering the last habit.
+            //.padding(.bottom, 40) // Prevents the TabView from covering the last habit.
+            /*
+             The code applies a conditional bottom padding to the view based on the operating system version.
+
+             The padding amount is determined by an immediately invoked closure ({...}()) that runs an availability check (#available).
+
+             If the device is running iOS 26.0 or newer, the padding is 0 (no padding).
+
+             If the device is running an older version, the padding is 40 points.
+             */
+            .padding(.bottom, {
+                if #available(iOS 26.0, *) {
+                    return 0 // TabView is of liquid glass therefore nothing is hidden
+                } else {
+                    return 40 // Prevents the TabView from covering the last habit.
+                }
+            }())
             .scrollIndicators(.hidden)
             .scrollTargetBehavior(.viewAligned)
         }

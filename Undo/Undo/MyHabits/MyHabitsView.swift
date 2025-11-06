@@ -28,6 +28,8 @@ struct MyHabitsView: View {
                 HabitsSectionView(habits: habits, path: $path)
             }
             .navigationTitle(String(localized: "My Habits"))
+            // This is a required alternative since the .large mode is broken for now in ios 26
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {
                     Button(String(localized: "Add Habit"), systemImage: "plus") {
