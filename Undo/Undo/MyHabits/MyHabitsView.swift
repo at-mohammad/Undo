@@ -28,6 +28,7 @@ struct MyHabitsView: View {
                 HabitsSectionView(habits: habits, path: $path)
             }
             .navigationTitle(String(localized: "My Habits"))
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {
                     Button(String(localized: "Add Habit"), systemImage: "plus") {

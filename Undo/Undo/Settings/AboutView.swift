@@ -15,11 +15,6 @@ struct AboutView: View {
     private let appVersion = AppInfo.version
     private let buildNumber = AppInfo.buildNumber
     private let githubURL = URL(string: "https://github.com/at-mohammad/Undo.git")!
-    private let tiktokURL = URL(string: "https://www.tiktok.com/@pixelarabi")!
-    private let youtubeURL = URL(string: "https://www.youtube.com/@pixelarabi")!
-    private let instagramURL = URL(string: "https://www.instagram.com/pixelarabi")!
-    private let xURL = URL(string: "https://x.com/ATMohammad_")!
-    private let bmcURL = URL(string: "https://buymeacoffee.com/amohammad")!
     private let iconWindURL = URL(string: "https://www.flaticon.com/authors/icon-wind")!
     private let freePikURL = URL(string: "https://www.flaticon.com/authors/freepik")!
 
@@ -43,10 +38,10 @@ struct AboutView: View {
                     }
                 }
                 
-                Section(String(localized: "Resources")) {
-                    Link(String(localized: "GitHub"), destination: githubURL)
-                        .foregroundStyle(AppTheme.dynamicPrimary)
-                }
+//                Section(String(localized: "Resources")) {
+//                    Link(String(localized: "GitHub"), destination: githubURL)
+//                        .foregroundStyle(AppTheme.dynamicPrimary)
+//                }
                 
                 Section(String(localized: "Support")) {
                     NavigationLink(String(localized: "Help & Feedback")) {
@@ -74,25 +69,16 @@ struct AboutView: View {
                             Text(String(localized: "Version") + ":")
                             Text(appVersion)
                         }
-                        Text(String(localized: "Creator"))
-                        HStack(spacing: 30) {
-                            //SocialView(image: "tiktok", url: tiktokURL)
-                            //SocialView(image: "youtube", url: youtubeURL)
-                            //SocialView(image: "instagram", url: instagramURL)
-                            SocialView(image: "twitter", url: xURL)
-                            SocialView(image: "bmc", url: bmcURL)
-                        }
-                        .environment(\.layoutDirection, .leftToRight) // Forces a left-to-right layout, regardless of the device's language.
                     }
                 }
                 .font(.footnote)
                 .foregroundColor(.gray)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .listRowBackground(Color.clear)
-                .buttonStyle(.plain) // Disable tapping all socials buttons at once
                 
             }
             .navigationTitle(String(localized: "About Undo"))
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

@@ -45,7 +45,7 @@ struct HabitsSectionView: View {
                 }
                 .scrollTargetLayout()
             }
-            .padding(.bottom, 40) // Prevents the TabView from covering the last habit.
+            //.padding(.bottom, 40) // Prevents the TabView from covering the last habit. (Not needed for ios 26)
             .scrollIndicators(.hidden)
             .scrollTargetBehavior(.viewAligned)
         }
