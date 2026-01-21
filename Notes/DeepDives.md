@@ -550,3 +550,47 @@
 
 ---
 
+### 12. `currentStreak(asOf:) -> Int` Model Method
+
+- **What it does**:
+    Calculates the current streak of consecutive days the habit has been completed. It intelligently handles the "Grace Period" for the current day, ensuring the streak isn't reset to 0 just because the user hasn't completed the habit *yet* today.
+- **Parameters**:
+    `referenceDate`: The anchor date for the calculation (typically `Date.now`).
+- **Returns**:
+    An `Int` representing the number of consecutive days completed ending at (or immediately before) the reference date.
+- **Code**:
+    ```swift
+    func currentStreak(asOf referenceDate: Date) -> Int {
+        // Safety & Early Exit: Ensure logs exist and aren't empty before proceeding.
+        guard let logs = logs, !logs.isEmpty else { return 0 }
+
+        // Capture the calendar instance once to ensure consistency, performance, and DRY code.
+        let calendar = DateUtils.calendar
+
+        // Reference: TT#4
+        let completedDates = Set(logs.filter{$0.isCompleted}.map{calendar.startOfDay(for: $0.date)})
+
+        var streak = 0
+
+        // We start by assuming the streak *might* include the passed date (Today in this case).
+        var checkDate = calendar.startOfDay(for: referenceDate)
+
+        // Grace Period Logic: If the habit is NOT done today, shift back to yesterday.
+        // This prevents a "0" streak while the current day is still active.
+        if !completedDates.contains(checkDate) {
+            checkDate = DateUtils.previousDay(from: checkDate)
+        }
+
+        // Count consecutive days going backwards until the chain breaks.
+        // Reference: TT#4
+        while completedDates.contains(checkDate) {
+            streak += 1
+            checkDate = DateUtils.previousDay(from: checkDate)
+        }
+
+        return streak
+    }
+    ```
+- **Key Insights**:
+    - **Data Normalization**: Time components (hours/minutes) are the enemy of streak calculations. Normalizing everything to `startOfDay` eliminates bugs where dates don't match due to time differences.
+    - **User Experience**: The logic prioritizes encouragement. By checking yesterday if today is incomplete, the app validates past effort without prematurely punishing the user for the current incomplete day.

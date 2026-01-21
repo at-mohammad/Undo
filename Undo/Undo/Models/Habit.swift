@@ -91,4 +91,30 @@ class Habit {
             }
         }
     }
+    
+    // Reference: DD#12
+    func currentStreak(asOf referenceDate: Date) -> Int {
+        
+        guard let logs = logs, !logs.isEmpty else { return 0 }
+        
+        let calendar = DateUtils.calendar
+        
+        // Reference: TT#4
+        let completedDates = Set(logs.filter{$0.isCompleted}.map{calendar.startOfDay(for: $0.date)})
+        
+        var streak = 0
+        
+        var checkDate = calendar.startOfDay(for: referenceDate)
+        if !completedDates.contains(checkDate) {
+            checkDate = DateUtils.previousDay(from: checkDate)
+        }
+        
+        // Reference: TT#4
+        while completedDates.contains(checkDate) {
+            streak += 1
+            checkDate = DateUtils.previousDay(from: checkDate)
+        }
+        
+        return streak
+    }
 }

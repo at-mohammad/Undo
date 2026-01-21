@@ -29,6 +29,11 @@ struct DateUtils {
         return dateFormatter.shortWeekdaySymbols[weekdayIndex].prefix(1).uppercased()
     }
     
+    // Reference: LL#5
+    static func previousDay(from date: Date) -> Date {
+        calendar.date(byAdding: .day, value: -1, to: date)!
+    }
+    
     static func getDayNumber(for date: Date) -> Int {
         calendar.component(.day, from: date)
     }

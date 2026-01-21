@@ -68,3 +68,14 @@
   - Preserves view state when switching tabs
 
 ---
+
+### 5. `calendar.date(byAdding:value:to:)`
+- **Description**:
+  - A `Calendar` method used to accurately calculate past or future dates by adding or subtracting specific calendar components.
+- **How It Works**:
+  - Input: It takes a time component (like `.day`), a value (negative to go back in time), and a reference `Date`.
+  - Output: It returns a new `Date` that is shifted by that exact calendar amount, preserving the time of day.
+- **Important Notes**:
+  - The method returns an optional, but force unwrapping (`!`) is safe for standard operations like "yesterday" since valid dates always have a predecessor.
+
+---

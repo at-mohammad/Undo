@@ -123,3 +123,58 @@
     - **Testing**: They can make unit testing more difficult because they introduce global state, making it hard to isolate components for testing.
 
 ---
+
+### 4. Optimizing Repeated Lookups with Sets
+
+- **What it does**:
+    A performance optimization technique that drastically reduces the time complexity of checking if an item exists in a collection, transforming it from a linear search **O(n)** to an instant lookup **O(1)**.
+- **How It Works**:
+    We convert an existing Array into a `Set` before entering a loop. Because Sets use hash values to index their contents, checking `contains()` becomes a constant operation, regardless of how many items are in the list.
+- **The Optimized Approach (Recommended)**:
+    ```swift
+    // ✅ Fast: O(1) Lookups
+    // We convert the array to a Set ONCE.
+    let completedDates = Set(logs.filter{$0.isCompleted}.map{calendar.startOfDay(for: $0.date)})
+
+    // The loop runs instantly because .contains() on a Set is O(1)
+    while completedDates.contains(checkDate) {
+        streak += 1
+        checkDate = DateUtils.previousDay(from: checkDate)
+    }
+    ```
+- **The Unoptimized Alternative (What to Avoid)**:
+    ```swift
+    // ❌ Slow: O(n²) Performance
+    // We keep the data as a standard Array.
+    let completedDatesArray = logs.filter{$0.isCompleted}.map{calendar.startOfDay(for: $0.date)}
+
+    // CRITICAL ISSUE: .contains() on an Array has to scan the list item-by-item O(n).
+    // Doing this inside a while loop creates O(n) * O(n) = O(n²) complexity.
+    while completedDatesArray.contains(checkDate) {
+        streak += 1
+        checkDate = DateUtils.previousDay(from: checkDate)
+    }
+    ```
+- **Breaking Down the One-Liner**:
+    The line `Set(logs.filter...map...)` is a functional chain that performs three distinct steps. Here is the "Classic Code" equivalent of what is actually happening under the hood:
+    ```swift
+    // 1. Create an empty Set to hold our results
+    var completedDates = Set<Date>()
+
+    // 2. Iterate through every log (The Filter & Map phase)
+    for log in logs {
+        // FILTER: Only care about logs where the habit was actually done
+        if log.isCompleted {
+            // MAP: Transform the log object into a standardized Date (Midnight)
+            let dateOnly = calendar.startOfDay(for: log.date)
+
+            // 3. Insert into Set (handling duplicates automatically)
+            completedDates.insert(dateOnly)
+        }
+    }
+    ```
+- **Why and When to Use It**:
+    Use this pattern whenever you have a list of items and you need to check for existence multiple times (e.g., inside a `for` or `while` loop).
+    - **Nested Loops**: If you check an array inside a loop, you are performing **O(n²)** work. Using a Set reduces this to **O(n)**.
+    - **Large Datasets**: As your data grows (e.g., years of habit logs), Array lookups get slower. Set lookups remain instant.
+    - **Filtering**: Ideal for algorithms like streaks, calendar matching, or removing duplicates.
