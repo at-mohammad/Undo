@@ -79,3 +79,41 @@
   - The method returns an optional, but force unwrapping (`!`) is safe for standard operations like "yesterday" since valid dates always have a predecessor.
 
 ---
+
+### 6. `.shadow(color:radius:x:y:)`
+- **Description**:
+  A view modifier that applies a shadow to the view.
+- **How It Works**:
+  Adds visual depth by simulating elevation above the background surface.
+- **Parameters**:
+  - `color`: The color of the shadow (supports opacity).
+  - `radius`: The size of the blur; higher values create softer, more diffused shadows.
+  - `x`: The horizontal offset (positive moves right, negative moves left).
+  - `y`: The vertical offset (positive moves down, negative moves up).
+- **Visual Logic**:
+  - The offsets (`x` and `y`) simulate the angle of the light source relative to the object.
+  - A positive `y` value (e.g., `y: 5`) pushes the shadow downwards. This creates the illusion that the light source is positioned **above** the object, casting the shadow on the floor beneath it.
+- **Example**:
+  ```swift
+  .shadow(color: .black, radius: 4, x: 0, y: 5)
+  ```
+
+---
+
+### 7. `date.formatted(.dateTime.weekday(.wide))`
+
+- **Description**:
+  Displays the full name of the day of the week (e.g., "Monday") derived from a `Date` object.
+- **How It Works**:
+  It uses the modern Swift `FormatStyle` API (iOS 15+) to convert a raw `Date` into a string. It extracts only the specific component requested (the weekday) while adhering to the user's device locale settings.
+- **Parameters (Chain)**:
+  - `.formatted(...)`: The method that converts non-string data (like Dates) into a String.
+  - `.dateTime`: Specifies that the formatting logic is for Date/Time (as opposed to Currency or Numbers).
+  - `.weekday`: Restricts the output to only show the day of the week.
+  - `.wide`: The style argument; requests the full spelling (e.g., "Friday"). Other options include `.abbreviated` ("Fri") or `.narrow` ("F").
+- **Localization**: This method is locale-aware. If the user’s device is set to Spanish, `.wide` will output "viernes" automatically; no manual translation files are needed.
+- **Example**:
+  ```swift
+  Text(date.formatted(.dateTime.weekday(.wide))) // Renders: "Thursday"
+  Text(date.formatted(.dateTime.month().day())) // Renders: Oct 24
+  ```

@@ -594,3 +594,39 @@
 - **Key Insights**:
     - **Data Normalization**: Time components (hours/minutes) are the enemy of streak calculations. Normalizing everything to `startOfDay` eliminates bugs where dates don't match due to time differences.
     - **User Experience**: The logic prioritizes encouragement. By checking yesterday if today is incomplete, the app validates past effort without prematurely punishing the user for the current incomplete day.
+
+---
+
+### 13. Custom Linear Progress Bar (`GeometryReader`)
+- **What it does**:
+    Renders a dynamic, horizontally filling progress bar that represents the completion status of a habit or task. It adapts responsively to the available screen width while maintaining a fixed vertical height.
+- **Code**:
+    ```swift
+    GeometryReader { geo in
+        ZStack(alignment: .leading) {
+            // 1. Background Track
+            Capsule()
+                .fill(Color.gray.opacity(0.1))
+                .frame(height: 6)
+
+            // 2. Foreground Fill
+            Capsule()
+                .fill(Color.cyan)
+                .frame(width: geo.size.width * progress, height: 6)
+                .animation(.spring, value: progress)
+        }
+    }
+    // 3. Layout Constraint
+    .frame(height: 6)
+    ```
+- **Key Insights**:
+    - **The `GeometryReader` Necessity**:
+        SwiftUI views typically govern their own size, but a percentage-based bar requires knowledge of the *container's* width. `GeometryReader` acts as a measuring tape, exposing the parent's dimensions via the `geo` proxy. This allows the fill width to be calculated as `geo.size.width * progress`.
+    - **Z-Stack Alignment**:
+        The `ZStack` must use `alignment: .leading`. Without this, both capsules would center themselves. As the progress bar grows, it would expand outward from the middle (like a resizing pill) rather than filling from left to right (like a loading bar).
+    - **Double Constraint Logic (Height)**:
+        The height of `6` appears in two distinct places for two distinct reasons:
+        - **Inner `.frame(height: 6)` on Capsules**: Defines the *drawing* thickness of the shapes.
+        - **Outer `.frame(height: 6)` on `GeometryReader**`: Defines the *layout* footprint. Without this, `GeometryReader` (which is greedy by nature) would expand to consume all available vertical space in the parent view, disrupting the surrounding layout.
+  - **Visual Continuity**:
+        The `Capsule` shape is used for both the background track and the foreground fill. This ensures that even when the progress is very low (e.g., 1%), the rounded corners of the fill nest perfectly inside the rounded corners of the background track.
